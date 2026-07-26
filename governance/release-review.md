@@ -29,10 +29,12 @@ A content object may be released only after all applicable checks pass.
 - Includes privacy or escalation guidance where relevant.
 
 ## Web checks
-- Page title matches the learner's likely question.
+- Page title matches the learner's likely question without repeating the site name.
 - Headings support scanning.
 - Interactive elements have a non-interactive fallback.
-- Links have descriptive labels.
+- Written instructions match the fields and scenarios in the rendered activity.
+- Course-sequence navigation renders as semantic, descriptive links rather than visible Markdown syntax.
+- Reading-time and activity-time labels describe the actual learner effort.
 - Content works on narrow screens.
 
 ## Final simplification pass

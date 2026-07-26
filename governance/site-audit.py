@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
+import json
 import re
 import sys
 
@@ -36,7 +37,7 @@ def audit() -> list[str]:
     failures: list[str] = []
     html_files = sorted(SITE.rglob("*.html"))
     if len(html_files) < 100:
-        failures.append(f"expected at least 80 HTML pages, found {len(html_files)}")
+        failures.append(f"expected at least 100 HTML pages, found {len(html_files)}")
     required = [
         SITE / "index.html",
         SITE / "start.html",
@@ -65,6 +66,12 @@ def audit() -> list[str]:
         elif parser.h1_count != 1:
             failures.append(f"expected exactly one h1, found {parser.h1_count}: {path.relative_to(ROOT)}")
         page_text = path.read_text(encoding="utf-8")
+        raw_markdown_links = re.findall(r"\[[^\]\n]+\]\([^\)\n]+\)", page_text)
+        if raw_markdown_links:
+            failures.append(
+                f"raw Markdown link visible in generated HTML: {path.relative_to(ROOT)} -> "
+                + raw_markdown_links[0]
+            )
         for token in ('class="skip-link"', 'id="main-content"', 'class="site-footer"'):
             if token not in page_text:
                 failures.append(f"missing accessibility/polish element {token}: {path.relative_to(ROOT)}")
@@ -142,6 +149,8 @@ def audit() -> list[str]:
                 failures.append(f"home page missing orientation element: {token}")
         if text.count('<div><span>') != 4:
             failures.append("home page should show exactly four learning stages")
+        if "<title>Practical AI Learning</title>" not in text:
+            failures.append("home page browser title should not duplicate the site name")
 
     module_one_task = SITE / "practice" / "module-01-completion-task.html"
     module_two_task = SITE / "practice" / "module-02-completion-task.html"
@@ -149,6 +158,26 @@ def audit() -> list[str]:
         failures.append("Module 1 task should contain four scenarios")
     if module_two_task.exists() and module_two_task.read_text(encoding="utf-8").count('class="activity-scenario"') != 4:
         failures.append("Module 2 task should contain four scenarios")
+
+    activity_records = {
+        int(item["module"]): item
+        for item in json.loads((ROOT / "practice" / "activity-bank.json").read_text(encoding="utf-8"))
+    }
+    for module_num in (1, 2):
+        source_path = ROOT / "practice" / f"module-{module_num:02d}-completion-task.md"
+        source_text = source_path.read_text(encoding="utf-8")
+        scenario_section = re.search(r"## Scenarios\s+(.*?)(?=\n## |\Z)", source_text, flags=re.S)
+        source_scenarios = []
+        if scenario_section:
+            source_scenarios = [
+                match.group(1).strip()
+                for match in re.finditer(r"^\d+\.\s+(.+)$", scenario_section.group(1), flags=re.M)
+            ]
+        interactive_scenarios = [str(item) for item in activity_records[module_num]["repeat"]["items"]]
+        if source_scenarios != interactive_scenarios:
+            failures.append(
+                f"Module {module_num} written scenarios do not match the interactive worksheet"
+            )
 
     lesson_pages = list((SITE / "modules").glob("module-*/lesson-*.html"))
     if len(lesson_pages) != 36:
@@ -161,11 +190,13 @@ def audit() -> list[str]:
             failures.append(f"lesson missing completion control: {path.relative_to(ROOT)}")
         if "lesson-navigation" not in text:
             failures.append(f"lesson missing sequence navigation: {path.relative_to(ROOT)}")
+        elif not re.search(r'<nav class="lesson-navigation"[^>]*>.*?<a href=', text, flags=re.S):
+            failures.append(f"lesson sequence navigation is not rendered as links: {path.relative_to(ROOT)}")
         for token in ("data-lesson-check", "data-lesson-check-submit", "data-lesson-check-feedback"):
             if token not in text:
                 failures.append(f"lesson missing decision check {token}: {path.relative_to(ROOT)}")
-        if 'class="page-meta"' not in text or "About " not in text:
-            failures.append(f"lesson missing effort metadata: {path.relative_to(ROOT)}")
+        if not re.search(r'class="page-meta"[^>]*>.*?About \d+ min read', text, flags=re.S):
+            failures.append(f"lesson missing reading-time metadata: {path.relative_to(ROOT)}")
 
     practice_pages = list((SITE / "practice").glob("module-*-completion-task.html"))
     if len(practice_pages) != 12:
@@ -176,6 +207,10 @@ def audit() -> list[str]:
             failures.append(f"practice page missing page kind: {path.relative_to(ROOT)}")
         if "data-completion-toggle" not in text:
             failures.append(f"practice page missing completion control: {path.relative_to(ROOT)}")
+        if not re.search(r'<nav class="lesson-navigation"[^>]*>.*?<a href=', text, flags=re.S):
+            failures.append(f"practice sequence navigation is not rendered as links: {path.relative_to(ROOT)}")
+        if "About 10–20 min" not in text:
+            failures.append(f"practice page missing activity-time metadata: {path.relative_to(ROOT)}")
         for token in (
             "data-interactive-activity",
             "data-activity-input",
@@ -200,6 +235,10 @@ def audit() -> list[str]:
         text = path.read_text(encoding="utf-8")
         if 'data-page-kind="assessment"' not in text:
             failures.append(f"assessment page missing page kind: {path.relative_to(ROOT)}")
+        if not re.search(r'<nav class="lesson-navigation"[^>]*>.*?<a href=', text, flags=re.S):
+            failures.append(f"assessment sequence navigation is not rendered as links: {path.relative_to(ROOT)}")
+        if "About 5 min" not in text:
+            failures.append(f"assessment page missing activity-time metadata: {path.relative_to(ROOT)}")
         for token in ("data-assessment-form", "data-question", "data-answer", "data-assessment-result"):
             if token not in text:
                 failures.append(f"assessment page missing control {token}: {path.relative_to(ROOT)}")
@@ -212,6 +251,8 @@ def audit() -> list[str]:
         for token in ("data-capstone-workbook", "data-capstone-input", "data-capstone-count", "data-capstone-progress", "data-capstone-review", "data-capstone-status", "Delivery and preservation", "Keep a concise project record"):
             if token not in text:
                 failures.append(f"capstone missing aligned planner or record content: {token}")
+        if "Plan: about 15–20 min; project time varies" not in text:
+            failures.append("capstone missing realistic effort metadata")
 
     progress_page = SITE / "progress.html"
     if progress_page.exists():

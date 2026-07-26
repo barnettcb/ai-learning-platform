@@ -160,8 +160,17 @@ def render_page(
         meta_bits.append(page_label)
     elif page_kind in kind_labels:
         meta_bits.append(kind_labels[page_kind])
-    if reading_minutes and page_kind in {"lesson", "practice", "reference", "overview", "capstone", "start"}:
-        meta_bits.append(f"About {reading_minutes} min")
+    effort_label = ""
+    if reading_minutes and page_kind in {"lesson", "reference", "overview", "start"}:
+        effort_label = f"About {reading_minutes} min read"
+    elif page_kind == "practice":
+        effort_label = "About 10–20 min"
+    elif page_kind == "assessment":
+        effort_label = "About 5 min"
+    elif page_kind == "capstone":
+        effort_label = "Plan: about 15–20 min; project time varies"
+    if effort_label:
+        meta_bits.append(effort_label)
     page_meta = ""
     if meta_bits:
         page_meta = '<p class="page-meta" aria-label="Page details">' + "<span>·</span>".join(
@@ -183,6 +192,7 @@ def render_page(
   <textarea id="page-note" rows="6" placeholder="Capture a useful idea, question, or next step. Notes stay in this browser."></textarea>
   <p id="note-status" class="muted" role="status" aria-live="polite"></p>
 </section>'''
+    document_title = title if title == "Practical AI Learning" else f"{title} | Practical AI Learning"
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -194,7 +204,7 @@ def render_page(
 <meta property="og:description" content="{html.escape(description, quote=True)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Practical AI Learning">
-<title>{html.escape(title)} | Practical AI Learning</title>
+<title>{html.escape(document_title)}</title>
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{prefix}assets/site.css">
 </head>
@@ -600,24 +610,39 @@ def lesson_sequence() -> list[tuple[int, Path]]:
     return sequence
 
 
-def lesson_nav_markdown(index: int, sequence: list[tuple[int, Path]]) -> str:
-    module_num, lesson = sequence[index]
-    links: list[str] = []
+def sequence_navigation(links: list[tuple[str, str]]) -> str:
+    anchors = " · ".join(
+        f'<a href="{html.escape(href, quote=True)}">{html.escape(label)}</a>'
+        for label, href in links
+    )
+    return (
+        "\n\n---\n\n"
+        '<nav class="lesson-navigation" aria-label="Course sequence">'
+        + anchors
+        + "</nav>"
+    )
+
+
+def lesson_nav_markup(index: int, sequence: list[tuple[int, Path]]) -> str:
+    module_num, _lesson = sequence[index]
+    links: list[tuple[str, str]] = []
     if index > 0:
         prev_module, prev_lesson = sequence[index - 1]
         rel = Path("..") / f"module-{prev_module:02d}" / prev_lesson.with_suffix(".html").name
-        links.append(f"[← Previous: {learner_lesson_title(prev_lesson)}]({rel.as_posix()})")
-    links.append(f"[Module {module_num} home](index.html)")
+        links.append((f"← Previous: {learner_lesson_title(prev_lesson)}", rel.as_posix()))
+    links.append((f"Module {module_num} home", "index.html"))
     if index + 1 < len(sequence) and sequence[index + 1][0] == module_num:
         next_module, next_lesson = sequence[index + 1]
         rel = Path("..") / f"module-{next_module:02d}" / next_lesson.with_suffix(".html").name
-        links.append(f"[Next: {learner_lesson_title(next_lesson)} →]({rel.as_posix()})")
+        links.append((f"Next: {learner_lesson_title(next_lesson)} →", rel.as_posix()))
     else:
         links.append(
-            f"[Continue to the Module {module_num} completion task →]"
-            f"(../../practice/module-{module_num:02d}-completion-task.html)"
+            (
+                f"Continue to the Module {module_num} completion task →",
+                f"../../practice/module-{module_num:02d}-completion-task.html",
+            )
         )
-    return "\n\n---\n\n<div class=\"lesson-navigation\">" + " · ".join(links) + "</div>"
+    return sequence_navigation(links)
 
 
 def main() -> None:
@@ -796,7 +821,7 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         local_position = module_positions[module_num]
         module_out = OUT / "modules" / f"module-{module_num:02d}"
         lesson_number = int(re.search(r"(\d+)", lesson.stem).group(1))
-        lesson_text = simplify_lesson_markdown(lesson.read_text(encoding="utf-8")) + "\n\n" + lesson_check_markup(lesson_number) + lesson_nav_markdown(index, sequence)
+        lesson_text = simplify_lesson_markdown(lesson.read_text(encoding="utf-8")) + "\n\n" + lesson_check_markup(lesson_number) + lesson_nav_markup(index, sequence)
         lesson_id = f"module-{module_num:02d}-{lesson.stem}"
         write_page(
             module_out / lesson.with_suffix(".html").name,
@@ -820,11 +845,11 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         )
         activity = ACTIVITIES.get(module_num)
         interactive = "\n\n" + activity_markup(activity) if activity else ""
-        task_text = path.read_text(encoding="utf-8") + interactive + (
-            "\n\n---\n\n<div class=\"lesson-navigation\">"
-            f"[Module {module_num} home](../modules/module-{module_num:02d}/index.html) · "
-            f"[Continue to the readiness check →](../assessments/module-{module_num:02d}-readiness-check.html)"
-            "</div>"
+        task_text = path.read_text(encoding="utf-8") + interactive + sequence_navigation(
+            [
+                (f"Module {module_num} home", f"../modules/module-{module_num:02d}/index.html"),
+                ("Continue to the readiness check →", f"../assessments/module-{module_num:02d}-readiness-check.html"),
+            ]
         )
         write_page(
             OUT / "practice" / path.with_suffix(".html").name,
@@ -843,18 +868,18 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
             {"id": assessment_id, "title": title, "module": module_num, "url": url, "kind": "assessment"}
         )
         if module_num < 12:
-            continuation = (
-                "\n\n---\n\n<div class=\"lesson-navigation\">"
-                f"[Module {module_num} home](../modules/module-{module_num:02d}/index.html) · "
-                f"[Continue to Module {module_num + 1} →](../modules/module-{module_num + 1:02d}/index.html)"
-                "</div>"
+            continuation = sequence_navigation(
+                [
+                    (f"Module {module_num} home", f"../modules/module-{module_num:02d}/index.html"),
+                    (f"Continue to Module {module_num + 1} →", f"../modules/module-{module_num + 1:02d}/index.html"),
+                ]
             )
         else:
-            continuation = (
-                "\n\n---\n\n<div class=\"lesson-navigation\">"
-                "[Module 12 home](../modules/module-12/index.html) · "
-                "[Continue to the capstone →](../capstone/capstone-project.html)"
-                "</div>"
+            continuation = sequence_navigation(
+                [
+                    ("Module 12 home", "../modules/module-12/index.html"),
+                    ("Continue to the capstone →", "../capstone/capstone-project.html"),
+                ]
             )
         write_page(
             OUT / "assessments" / f"{assessment_id}.html",

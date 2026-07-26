@@ -74,7 +74,7 @@ The generated site is dependency-light, responsive, and built directly from the 
 - Guided resume-learning path that interleaves each module’s lessons, applied task, and readiness check
 - Simplified responsive navigation with an expandable module list and print-friendly lesson pages
 - Clear orientation design across Home, module landing pages, and the Practice hub
-- Page-type and estimated-effort metadata across learning content
+- Page-type metadata with reading-time labels for lessons and realistic completion-time labels for activities
 - Active navigation, keyboard skip navigation, visible focus states, and reduced-motion support
 - Scenario-based readiness checks with selectable answers, automatic scoring, immediate explanations, retry support, and persistent completion recognition
 - One compact decision check in every lesson with saved selections, immediate rationale, and retry support
@@ -84,7 +84,7 @@ The generated site is dependency-light, responsive, and built directly from the 
 - A personal, printable course-completion summary that appears only after all guided work is complete
 - GitHub Pages production metadata, favicon, and an accessible project-site-aware 404 page
 - Module-local lesson sequencing plus interactive worksheets on all twelve module completion tasks with scored decision checks, visible answer choices, immediate rationale, selects, text fields, response tallies, completion meters, autosave, and clear/review controls
-- Automated generated-site link, assessment, structure, accessibility-element, production-metadata, and effort-metadata audit
+- Automated generated-site checks for links, rendered navigation, source/activity alignment, assessment structure, accessibility elements, production metadata, realistic effort labels, and duplicate browser titles
 
 ## Build and verification
 Run the complete reproducible release gate:
