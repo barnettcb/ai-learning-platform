@@ -25,7 +25,7 @@ Website-first self-study system for practical AI competence.
 - Canonical-content and search rules
 
 ### Content production
-- Modules 1–12 overviews
+- Consolidated orientation on all twelve module landing pages
 - All thirty-six canonical lessons
 - Module 1–12 completion tasks
 - Complete capstone project specification
@@ -48,7 +48,7 @@ The generated site is dependency-light, responsive, and built directly from the 
 5. Improve through conversation
 6. Research reliably
 7. Work with information
-8. Write and learn
+8. Write, learn, and apply
 9. Plan and decide
 10. Use AI in high-stakes domains
 11. Make good work repeatable
@@ -66,25 +66,25 @@ The generated site is dependency-light, responsive, and built directly from the 
 
 ## Current learner-experience features
 - Full-text client-side search across canonical lessons, readiness checks, and reference pages
-- Previous/next lesson navigation across the complete learning sequence
+- Previous/next navigation across the complete guided sequence, including tasks and readiness checks
 - Browser-local tracking for lessons, module tasks, readiness checks, and the capstone
 - Private browser-local bookmarks and notes, accessible from Progress and page study tools
 - Learning-data export/import covering progress, bookmarks, notes, and applied-task responses
 - Separate reset controls for progress and workspace data
 - Guided resume-learning path that interleaves each module’s lessons, applied task, and readiness check
 - Simplified responsive navigation with an expandable module list and print-friendly lesson pages
-- Clear orientation design across Home, module landing pages, and the Practice hub
+- Clear first-time orientation, substantive saved diagnostic feedback, complete module landing pages, and a unified Practice hub
 - Page-type metadata with reading-time labels for lessons and realistic completion-time labels for activities
 - Active navigation, keyboard skip navigation, visible focus states, and reduced-motion support
 - Scenario-based readiness checks with selectable answers, automatic scoring, immediate explanations, retry support, and persistent completion recognition
 - One compact decision check in every lesson with saved selections, immediate rationale, and retry support
-- Saved readiness-check attempts, clearer retry guidance, a focused review summary, and a concise course-complete state on the Progress page
+- Saved readiness-check attempts with restored explanations and direct lesson links, item-specific review focus, and a concise course-complete state on the Progress page
 - A seven-part browser-saved capstone planner aligned with one concise project record
 - Complete learning-data export/import for lesson decisions, diagnostics, worksheets, readiness checks, notes, bookmarks, progress, and the capstone plan
 - A personal, printable course-completion summary that appears only after all guided work is complete
 - GitHub Pages production metadata, favicon, and an accessible project-site-aware 404 page
-- Module-local lesson sequencing plus interactive worksheets on all twelve module completion tasks with scored decision checks, visible answer choices, immediate rationale, selects, text fields, response tallies, completion meters, autosave, and clear/review controls
-- Automated generated-site checks for links, rendered navigation, source/activity alignment, assessment structure, accessibility elements, production metadata, realistic effort labels, duplicate browser titles, and repository/build consistency
+- Full guided-path sequencing plus interactive worksheets on all twelve module completion tasks with aligned fields, response tallies, completion meters, autosave, and clear/review controls
+- Automated generated-site checks for links, full-path navigation, source/activity alignment, assessment-to-lesson review links, outcomes-map coverage, accessibility elements, realistic effort labels, and repository/build consistency
 - A polished professional visual system with consistent typography, comfortably sized metadata chips, 44-pixel global controls, action hierarchy, selected-answer states, responsive forms, refined navigation, and high-contrast accessible colors
 
 ## Build and verification
@@ -119,6 +119,8 @@ checks, and publishes `site/generated`. A manual deployment can also be started 
 the workflow's **Run workflow** button.
 
 The generated site is intentionally committed to the repository so browser-only downloads and code inspection match the deployed site. Whenever canonical content or the builder changes, run `python site/build_site.py` and commit the complete `site/generated` update. The release gate blocks deployment when the tracked generated tree is stale or incomplete.
+
+For optional deep browser QA on a development machine with Playwright and Chromium installed, run `python governance/browser-audit.py`. The standard GitHub Pages release gate does not require that extra dependency; its canonical, generated-output, markup, and JavaScript checks remain self-contained.
 
 ### Repository files added for hosting
 

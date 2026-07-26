@@ -1,8 +1,8 @@
 [
   {
     "module": 1,
-    "title": "Interactive task worksheet",
-    "intro": "Classify four scenarios, then identify the main risk and the human responsibility.",
+    "title": "Recognize AI strengths and limits",
+    "intro": "For each scenario, identify what AI is doing, the main limitation or risk, and the human responsibility.",
     "repeat": {
       "items": [
         "Generate possible themes for a neighborhood event.",
@@ -12,20 +12,14 @@
       ],
       "fields": [
         {
-          "key": "classification",
-          "label": "Classification",
-          "type": "select",
-          "options": [
-            "Choose one",
-            "Well suited",
-            "Useful with human review",
-            "Poorly suited"
-          ],
+          "key": "behavior",
+          "label": "What AI is being asked to do",
+          "type": "text",
           "required": true
         },
         {
           "key": "risk",
-          "label": "Main risk",
+          "label": "Main limitation or risk",
           "type": "text",
           "required": true
         },
@@ -36,17 +30,6 @@
           "required": true
         }
       ]
-    },
-    "challenge": {
-      "prompt": "Which task is the strongest fit for AI with ordinary human review?",
-      "options": [
-        "Diagnose new chest pain",
-        "Rewrite a long internal email for clarity",
-        "Decide who should be fired",
-        "Confirm a current legal filing deadline without checking a source"
-      ],
-      "answer": 1,
-      "explanation": "Rewriting supplied text is a strong drafting task. Medical diagnosis, employment decisions, and current legal deadlines require stronger human control or authoritative sources."
     }
   },
   {
@@ -87,17 +70,6 @@
           "required": true
         }
       ]
-    },
-    "challenge": {
-      "prompt": "A document contains names, account numbers, and medical details. What should happen first?",
-      "options": [
-        "Upload it and ask AI to remove the sensitive details",
-        "Minimize or de-identify the information before sharing anything",
-        "Use a longer prompt explaining that the file is confidential",
-        "Share it only after asking AI not to retain it"
-      ],
-      "answer": 1,
-      "explanation": "Privacy protection starts before information is shared. Remove or replace unnecessary identifying details and use an approved environment when sensitive information is genuinely required."
     }
   },
   {
@@ -119,13 +91,13 @@
       },
       {
         "key": "constraints",
-        "label": "Required constraints",
+        "label": "Requirements and boundaries",
         "type": "textarea",
         "required": true
       },
       {
         "key": "preferences",
-        "label": "Preferences",
+        "label": "Preferences, clearly separated",
         "type": "textarea",
         "required": true
       },
@@ -136,18 +108,7 @@
         "required": true,
         "large": true
       }
-    ],
-    "challenge": {
-      "prompt": "Which instruction gives AI the clearest assignment?",
-      "options": [
-        "Help me with a presentation",
-        "Create a five-slide briefing for supervisors that explains the new process, uses plain language, and ends with three implementation steps",
-        "Tell me everything about project communication",
-        "Make this better"
-      ],
-      "answer": 1,
-      "explanation": "The strongest assignment defines the deliverable, audience, purpose, constraints, and desired ending."
-    }
+    ]
   },
   {
     "module": 4,
@@ -185,23 +146,12 @@
         "required": true,
         "large": true
       }
-    ],
-    "challenge": {
-      "prompt": "When is a staged request most useful?",
-      "options": [
-        "When the task is trivial and the answer is obvious",
-        "When discovery or planning should be reviewed before the final output is produced",
-        "Whenever the prompt can be made longer",
-        "Only when AI refuses the first request"
-      ],
-      "answer": 1,
-      "explanation": "Staging creates deliberate review points before later work depends on an uncertain direction."
-    }
+    ]
   },
   {
     "module": 5,
     "title": "Write the repair instruction",
-    "intro": "Diagnose the weak draft and request a focused revision without restarting useful work.",
+    "intro": "Diagnose the weak draft, decide whether an example would help, and request a focused revision without restarting useful work.",
     "fields": [
       {
         "key": "keep",
@@ -228,24 +178,19 @@
         "required": true
       },
       {
+        "key": "example",
+        "label": "Would an example help? Include one short pattern or explain why not.",
+        "type": "textarea",
+        "required": true
+      },
+      {
         "key": "revision",
         "label": "Focused revision request",
         "type": "textarea",
         "required": true,
         "large": true
       }
-    ],
-    "challenge": {
-      "prompt": "A draft has one weak section but the rest is useful. What is the best next move?",
-      "options": [
-        "Start a new conversation and discard the draft",
-        "Ask for a focused revision that preserves the useful parts",
-        "Accept the entire draft to avoid inconsistency",
-        "Request three completely unrelated replacements"
-      ],
-      "answer": 1,
-      "explanation": "Focused repair preserves good work while clearly identifying what must change and why."
-    }
+    ]
   },
   {
     "module": 6,
@@ -283,18 +228,7 @@
         "required": true,
         "large": true
       }
-    ],
-    "challenge": {
-      "prompt": "Which claim most clearly requires direct source verification?",
-      "options": [
-        "A brainstorming suggestion",
-        "A current eligibility deadline for a government program",
-        "A proposed outline heading",
-        "A tone preference"
-      ],
-      "answer": 1,
-      "explanation": "Current deadlines can change and have real consequences, so they should be checked against an authoritative current source."
-    }
+    ]
   },
   {
     "module": 7,
@@ -332,23 +266,12 @@
         "required": true,
         "large": true
       }
-    ],
-    "challenge": {
-      "prompt": "What makes an AI-assisted information brief traceable?",
-      "options": [
-        "It sounds confident",
-        "It includes exact page, section, table, or image references for important facts",
-        "It is longer than the source",
-        "It removes all uncertainty"
-      ],
-      "answer": 1,
-      "explanation": "Traceability lets the reader return to the source location and verify the claim."
-    }
+    ]
   },
   {
     "module": 8,
-    "title": "Complete the writing and learning workflow",
-    "intro": "Use one section for writing assistance and one for active learning design.",
+    "title": "Complete the writing, learning, and everyday-use workflow",
+    "intro": "Use one section for writing assistance, one for active learning, and one for a low-stakes everyday application.",
     "fields": [
       {
         "key": "writing-purpose",
@@ -386,19 +309,20 @@
         "label": "Final performance check",
         "type": "textarea",
         "required": true
+      },
+      {
+        "key": "everyday-context",
+        "label": "Everyday goal, preferences, and constraints",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "everyday-tradeoffs",
+        "label": "Options, tradeoffs, and facts to confirm",
+        "type": "textarea",
+        "required": true
       }
-    ],
-    "challenge": {
-      "prompt": "Which learning activity best tests understanding?",
-      "options": [
-        "Reread the explanation",
-        "Copy the definition",
-        "Explain the idea in your own words and apply it to a new case",
-        "Highlight every sentence"
-      ],
-      "answer": 2,
-      "explanation": "Retrieval and transfer reveal whether the learner can use the idea, not merely recognize it."
-    }
+    ]
   },
   {
     "module": 9,
@@ -436,18 +360,7 @@
         "type": "textarea",
         "required": true
       }
-    ],
-    "challenge": {
-      "prompt": "What should remain human-owned in an AI-assisted decision?",
-      "options": [
-        "The formatting only",
-        "The final judgment, priorities, and acceptance of consequences",
-        "The first list of options only",
-        "Nothing once enough data is supplied"
-      ],
-      "answer": 1,
-      "explanation": "AI can structure options and surface tradeoffs, but the accountable person must own the judgment and consequences."
-    }
+    ]
   },
   {
     "module": 10,
@@ -504,18 +417,7 @@
         "type": "textarea",
         "required": true
       }
-    ],
-    "challenge": {
-      "prompt": "Which response is safest in a high-stakes domain?",
-      "options": [
-        "Give a definitive answer whenever the user sounds worried",
-        "State limits, identify what requires professional review, and direct urgent situations to appropriate help",
-        "Avoid all useful information",
-        "Replace uncertainty with the most likely answer"
-      ],
-      "answer": 1,
-      "explanation": "High-stakes support should preserve uncertainty, define limits, and escalate when professional or urgent help is appropriate."
-    }
+    ]
   },
   {
     "module": 11,
@@ -559,18 +461,7 @@
         "type": "textarea",
         "required": true
       }
-    ],
-    "challenge": {
-      "prompt": "What should be captured when turning a successful interaction into a reusable workflow?",
-      "options": [
-        "Only the final answer",
-        "Inputs, sequence, review points, quality checks, and expected output",
-        "Every word from the original conversation",
-        "Only the tool name"
-      ],
-      "answer": 1,
-      "explanation": "A reusable workflow preserves the process and quality controls, not just one successful result."
-    }
+    ]
   },
   {
     "module": 12,
@@ -620,17 +511,6 @@
         "type": "text",
         "required": true
       }
-    ],
-    "challenge": {
-      "prompt": "What is most important in a project handoff?",
-      "options": [
-        "A complete transcript with no prioritization",
-        "Current status, decisions, evidence, open issues, constraints, and the next action",
-        "A summary of only the earliest work",
-        "A promise that the next person can infer missing details"
-      ],
-      "answer": 1,
-      "explanation": "A good handoff allows continuation without reconstructing critical context or repeating settled decisions."
-    }
+    ]
   }
 ]

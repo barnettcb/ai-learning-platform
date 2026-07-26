@@ -24,3 +24,6 @@ A successful submission:
 
 ## Required review note
 Include a brief note naming the two claims that received the strongest verification and explaining why they deserved priority.
+
+
+> **Use this tool:** [Verification Ladder](../reference/verification-ladder.html) to match each important claim to an appropriate level of checking.

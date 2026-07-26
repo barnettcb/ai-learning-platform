@@ -34,6 +34,14 @@ A content object may be released only after all applicable checks pass.
 - Interactive elements have a non-interactive fallback.
 - Written instructions match the fields and scenarios in the rendered activity.
 - Course-sequence navigation renders as semantic, descriptive links rather than visible Markdown syntax.
+- First-time pages expose one unmistakable next action without forcing the learner to infer the path.
+- Module orientation is complete on the tracked landing page and does not add an untracked dead-end step.
+- Previous and next links represent the same guided path in both directions.
+- Diagnostic and readiness feedback identifies the stronger response, explains why, and links directly to relevant review material.
+- Every assessed skill has already been taught in the current or an earlier module.
+- Every required source packet, file, or example named by an activity is actually supplied.
+- Every canonical lesson appears at least once in the learning-outcomes map.
+- Interactions that duplicate another check or do not change learner action are removed.
 - Reading-time and activity-time labels describe the actual learner effort.
 - Content works on narrow screens.
 

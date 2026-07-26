@@ -1,7 +1,7 @@
 # Module 7 — Work With Information
 
 ## Module promise
-By the end of this module, learners can summarize and extract information from documents and images without losing the distinction between what the source contains and what the AI infers.
+By the end of this module, you can summarize and extract information from documents, data, and images without losing the distinction between what a source contains and what AI infers.
 
 ## Prerequisites
 Modules 2, 3, 4, and 6.
@@ -12,7 +12,7 @@ Modules 2, 3, 4, and 6.
 3. Work with images
 
 ## Completion task
-Review mixed source material, extract specified facts, compare the inputs, and produce a concise summary with uncertainties and source limits made visible.
+Use the supplied fictional source packet to extract specified facts, compare the inputs, and produce a concise, traceable summary with uncertainties and source limits visible.
 
-## Deliberate exclusions
-This module does not reteach research, source verification, writing style, or long-term file organization. It focuses on transforming supplied information accurately.
+## Scope
+This module focuses on transforming supplied information accurately. It does not replace source verification or outside research.

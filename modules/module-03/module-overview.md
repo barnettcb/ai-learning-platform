@@ -1,7 +1,7 @@
 # Module 3 — Define the Assignment
 
 ## Module promise
-By the end of this module, learners can turn a vague request into a clear task by defining the desired result, supplying relevant context, and stating the boundaries that matter.
+By the end of this module, you can turn a vague request into a clear task by defining the desired result, supplying relevant context, and stating the boundaries that matter.
 
 ## Prerequisites
 Modules 1 and 2.
@@ -12,7 +12,7 @@ Modules 1 and 2.
 3. State constraints and boundaries
 
 ## Completion task
-Turn an unclear request into a short task brief that identifies the result, relevant context, and operating boundaries without adding unnecessary detail.
+Turn an unclear request into a short task brief that identifies the result, relevant context, requirements, and preferences without adding premature instructions.
 
-## Deliberate exclusions
-This module does not teach audience, tone, response format, decomposition, examples, or iterative repair. Those concepts have separate canonical homes.
+## Scope
+This module defines the assignment itself. Audience, tone, response format, staging, and examples are introduced in Modules 4 and 5.

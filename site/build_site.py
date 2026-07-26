@@ -24,7 +24,7 @@ MODULE_NAMES = {
     5: "Improve Through Conversation",
     6: "Research Reliably",
     7: "Work with Information",
-    8: "Write and Learn",
+    8: "Write, Learn, and Apply",
     9: "Plan and Decide",
     10: "Use AI in High-Stakes Domains",
     11: "Make Good Work Repeatable",
@@ -40,45 +40,65 @@ LESSON_CHECKS = {int(item["lesson"]): item for item in json.loads((ROOT / "pract
 LEARNING_OUTCOMES = [
     (
         "Use AI with sound judgment",
-        "Decide when AI is useful, where human control must remain, and how much review a task deserves.",
-        [1, 2, 3, 22, 23],
+        "Understand how conversational AI behaves, decide when it belongs in a task, and keep authority and accountability human.",
+        [1, 2, 3, 4, 5, 6, 35],
     ),
     (
         "Communicate clearly with AI",
-        "Define outcomes, context, constraints, examples, and response formats that make useful work more likely.",
-        [4, 5, 6, 10, 11, 12],
+        "Define results, relevant context, boundaries, audience, response formats, stages, uncertainty, and useful examples.",
+        [7, 8, 9, 10, 11, 12, 13],
     ),
     (
         "Improve work through collaboration",
-        "Use conversation, critique, revision, and structured handoffs instead of expecting one perfect request.",
-        [13, 14, 15, 30, 31],
+        "Preserve useful context, diagnose weak results, revise deliberately, and turn successful interactions into reusable processes.",
+        [14, 15, 30, 31, 34],
     ),
     (
         "Research and verify reliably",
-        "Frame research questions, work from evidence, check changing facts, and preserve uncertainty when it matters.",
-        [16, 17, 18, 28, 35],
+        "Frame research, evaluate evidence, verify changing claims, and use web-connected AI without confusing retrieval with proof.",
+        [16, 17, 28],
     ),
     (
-        "Work with information and files",
-        "Summarize, compare, transform, and extract information while protecting meaning and source fidelity.",
-        [19, 24, 25, 26, 27],
+        "Work accurately with information",
+        "Summarize, extract, compare, and interpret documents, files, data, and images while preserving source fidelity and traceability.",
+        [19, 26, 27],
     ),
     (
-        "Write, learn, plan, and decide",
-        "Apply AI to practical thinking tasks without surrendering authorship, understanding, or responsibility.",
-        [20, 21, 29, 32, 33],
+        "Write, learn, and apply AI in daily life",
+        "Use AI for writing, active learning, and low-stakes everyday planning without surrendering authorship, understanding, or judgment.",
+        [18, 24, 25],
+    ),
+    (
+        "Plan and decide responsibly",
+        "Build practical plans, compare options and tradeoffs, and match the AI approach to the task and risk.",
+        [20, 21, 29],
     ),
     (
         "Protect privacy and manage risk",
-        "Minimize sensitive information and use stronger controls in health, legal, financial, employment, and safety contexts.",
-        [22, 23, 34],
+        "Minimize sensitive information and use stronger controls in financial, medical, employment, legal, and safety-related work.",
+        [5, 6, 22, 23, 35],
     ),
     (
-        "Build repeatable personal workflows",
-        "Turn successful work into reusable processes, preserve project continuity, and create a durable personal operating method.",
+        "Manage ongoing and repeatable work",
+        "Create reviewable workflows, preserve project state, build handoffs, and maintain a durable personal operating method.",
         [30, 31, 32, 33, 34, 36],
     ),
 ]
+
+PRACTICE_EFFORT_LABELS = {
+    1: "Short worksheet · About 10–15 min",
+    2: "Short worksheet · About 10–15 min",
+    3: "Focused application · About 15–25 min",
+    4: "Focused application · About 20–30 min",
+    5: "Focused application · About 15–25 min",
+    6: "Extended application · About 25–40 min",
+    7: "Extended application · About 30–45 min",
+    8: "Extended application · About 30–45 min",
+    9: "Extended application · About 30–45 min",
+    10: "Extended application · About 30–45 min",
+    11: "Extended application · About 30–45 min",
+    12: "Extended application · About 30–45 min",
+}
 
 REFERENCE_GROUPS = [
     ("Decide and plan", ["ai-use-decision-guide", "core-workflow"]),
@@ -129,6 +149,7 @@ def render_page(
     reading_minutes: int | None = None,
     page_label: str | None = None,
     description: str = SITE_DESCRIPTION,
+    effort_label: str | None = None,
 ) -> str:
     prefix = "../" * depth
     progress_control = ""
@@ -150,6 +171,7 @@ def render_page(
         "assessment": "Readiness check",
         "reference": "Reference tool",
         "overview": "Module overview",
+        "source-packet": "Practice source packet",
         "capstone": "Capstone",
         "module": "Module",
         "start": "Orientation",
@@ -161,17 +183,15 @@ def render_page(
         meta_bits.append(page_label)
     elif page_kind in kind_labels:
         meta_bits.append(kind_labels[page_kind])
-    effort_label = ""
-    if reading_minutes and page_kind in {"lesson", "reference", "overview", "start"}:
-        effort_label = f"About {reading_minutes} min read"
-    elif page_kind == "practice":
-        effort_label = "About 10–20 min"
-    elif page_kind == "assessment":
-        effort_label = "About 5 min"
-    elif page_kind == "capstone":
-        effort_label = "Plan: about 15–20 min; project time varies"
-    if effort_label:
-        meta_bits.append(effort_label)
+    resolved_effort = effort_label or ""
+    if not resolved_effort and reading_minutes and page_kind in {"lesson", "reference", "overview", "source-packet", "start"}:
+        resolved_effort = f"About {reading_minutes} min read"
+    elif not resolved_effort and page_kind == "assessment":
+        resolved_effort = "About 5 min"
+    elif not resolved_effort and page_kind == "capstone":
+        resolved_effort = "Plan: about 15–20 min; project time varies"
+    if resolved_effort:
+        meta_bits.append(resolved_effort)
     page_meta = ""
     if meta_bits:
         page_meta = '<p class="page-meta" aria-label="Page details">' + "<span>·</span>".join(
@@ -179,7 +199,7 @@ def render_page(
         ) + "</p>"
 
     study_tools = ""
-    if page_id and page_kind in {"lesson", "practice", "capstone", "assessment", "reference", "overview"}:
+    if page_id and page_kind in {"lesson", "practice", "capstone", "assessment", "reference", "overview", "source-packet"}:
         study_tools = f'''
 <section class="study-tools" aria-labelledby="study-tools-heading">
   <div class="study-tools-header">
@@ -241,13 +261,13 @@ def render_page(
 
 def build_nav() -> str:
     primary = [
-        ('Home', '/index.html'),
-        ('Continue Learning', '/index.html#continue-learning'),
-        ('Practice', '/practice/index.html'),
-        ('Progress', '/progress.html'),
-        ('Reference', '/reference/index.html'),
+        ('Home', '/index.html', ''),
+        ('Continue Learning', '/index.html', 'data-continue-link'),
+        ('Practice', '/practice/index.html', ''),
+        ('Progress', '/progress.html', ''),
+        ('Reference', '/reference/index.html', ''),
     ]
-    items = [f'<div class="nav-item"><a href="{href}">{label}</a></div>' for label, href in primary[:2]]
+    items = [f'<div class="nav-item"><a href="{href}" {extra}>{label}</a></div>' for label, href, extra in primary[:2]]
     module_links = ''.join(
         f'<div class="nav-item nav-module"><a href="/modules/module-{num:02d}/index.html">Module {num}: {html.escape(name)}</a></div>'
         for num, name in MODULE_NAMES.items()
@@ -257,7 +277,7 @@ def build_nav() -> str:
         + module_links
         + '</div></details>'
     )
-    items.extend(f'<div class="nav-item"><a href="{href}">{label}</a></div>' for label, href in primary[2:])
+    items.extend(f'<div class="nav-item"><a href="{href}" {extra}>{label}</a></div>' for label, href, extra in primary[2:])
     return ''.join(items).replace('href="/', 'href="__ROOT__')
 
 
@@ -276,6 +296,7 @@ def write_page(
     page_kind: str = "content",
     searchable: bool = True,
     page_label: str | None = None,
+    effort_label: str | None = None,
 ) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     depth = len(out_path.relative_to(OUT).parents) - 1
@@ -292,6 +313,7 @@ def write_page(
             reading_minutes=minutes,
             page_label=page_label,
             description=plain_summary(markdown_text, 160) or SITE_DESCRIPTION,
+            effort_label=effort_label,
         ),
         encoding="utf-8",
     )
@@ -342,27 +364,6 @@ def activity_markup(record: dict) -> str:
         '</div>',
         '<div class="activity-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-activity-progress></span></div>',
     ]
-    challenge = record.get("challenge")
-    if challenge:
-        lines.extend([
-            '<section class="activity-challenge" data-activity-challenge>',
-            '<div class="activity-challenge-heading">',
-            '<p class="eyebrow">Decision check</p>',
-            f'<h3>{html.escape(str(challenge["prompt"]))}</h3>',
-            '</div>',
-            '<div class="activity-choice-list">',
-        ])
-        for option_index, option in enumerate(challenge.get("options", [])):
-            choice_id = f'{activity_id}-challenge-{option_index + 1}'
-            lines.append(
-                f'<label class="activity-choice" for="{choice_id}"><input id="{choice_id}" type="radio" name="{activity_id}-challenge" value="{option_index}" data-challenge-choice> <span>{html.escape(str(option))}</span></label>'
-            )
-        lines.extend([
-            '</div>',
-            f'<button class="challenge-check-button" type="button" data-challenge-check data-answer="{int(challenge["answer"])}">Check decision</button>',
-            f'<p class="challenge-feedback" data-challenge-feedback data-explanation="{html.escape(str(challenge["explanation"]), quote=True)}" role="status" aria-live="polite"></p>',
-            '</section>',
-        ])
     repeat = record.get("repeat")
     if repeat:
         for item_index, item in enumerate(repeat.get("items", []), start=1):
@@ -393,7 +394,6 @@ def activity_markup(record: dict) -> str:
     ])
     return "\n".join(lines)
 
-
 def capstone_workbook_markup() -> str:
     fields = [
         ("project", "Project and intended result", "What meaningful project will you complete, and what usable result should exist at the end?"),
@@ -423,6 +423,14 @@ def capstone_workbook_markup() -> str:
     return "\n".join(lines)
 
 
+
+def lesson_source(number: int) -> tuple[int, Path]:
+    for module_num in range(1, 13):
+        candidate = ROOT / "modules" / f"module-{module_num:02d}" / f"lesson-{number:02d}.md"
+        if candidate.exists():
+            return module_num, candidate
+    raise KeyError(f"Lesson {number} not found")
+
 def assessment_markdown(record: dict) -> str:
     module_num = int(record["module"])
     lines = [
@@ -430,11 +438,15 @@ def assessment_markdown(record: dict) -> str:
         '',
         str(record["intro"]),
         '',
-        'Choose one answer for each scenario, then submit the check. Explanations appear after each attempt, your latest result is saved, and a perfect score marks the check complete.',
+        'Choose one answer for each scenario, then submit the check. Explanations and direct review links appear after each attempt, your latest result is saved, and a perfect score marks the check complete.',
         '',
         f'<form class="knowledge-check" data-assessment-form data-assessment-id="module-{module_num:02d}-readiness-check">',
     ]
     for q_index, question in enumerate(record["questions"]):
+        review_number = int(question["review_lesson"])
+        review_module, review_path = lesson_source(review_number)
+        review_title = learner_lesson_title(review_path)
+        review_url = f'../modules/module-{review_module:02d}/{review_path.with_suffix(".html").name}'
         lines.extend([
             f'<fieldset class="assessment-question" data-question data-answer="{int(question["answer"])}">',
             f'<legend>{q_index + 1}. {html.escape(str(question["prompt"]))}</legend>',
@@ -445,7 +457,10 @@ def assessment_markdown(record: dict) -> str:
                 f'<label for="{input_id}"><input id="{input_id}" type="radio" name="question-{q_index + 1}" value="{option_index}"> {html.escape(str(option))}</label>'
             )
         lines.extend([
-            f'<p class="assessment-explanation" data-explanation hidden>{html.escape(str(question["explanation"]))}</p>',
+            '<div class="assessment-explanation" data-explanation hidden>',
+            f'<p>{html.escape(str(question["explanation"]))}</p>',
+            f'<p><a href="{review_url}">Review Lesson {review_number}: {html.escape(review_title)}</a></p>',
+            '</div>',
             '</fieldset>',
         ])
     lines.extend([
@@ -494,7 +509,13 @@ def outcomes_page(sequence: list[tuple[int, Path]]) -> str:
     return "\n".join(sections)
 
 
-def module_page(module_num: int, lesson_paths: list[Path]) -> str:
+def overview_section(path: Path, heading: str) -> str:
+    text = path.read_text(encoding="utf-8")
+    match = re.search(rf"^## {re.escape(heading)}\s*$\n(.*?)(?=^## |\Z)", text, flags=re.M | re.S)
+    return match.group(1).strip() if match else ""
+
+
+def module_page(module_num: int, lesson_paths: list[Path], overview_path: Path) -> str:
     lesson_cards = []
     for position, lesson in enumerate(lesson_paths, start=1):
         title = learner_lesson_title(lesson)
@@ -504,12 +525,24 @@ def module_page(module_num: int, lesson_paths: list[Path]) -> str:
             f'<span><strong>Lesson {position} of {len(lesson_paths)}</strong><small>{html.escape(title)}</small></span>'
             '</a>'
         )
+    promise = markdown(overview_section(overview_path, "Module promise"))
+    prerequisites = markdown(overview_section(overview_path, "Prerequisites"))
+    task = markdown(overview_section(overview_path, "Completion task"))
+    scope = markdown(overview_section(overview_path, "Scope"))
+    first_lesson = lesson_paths[0].with_suffix('.html').name
     return "\n".join([
         f"# Module {module_num}: {MODULE_NAMES[module_num]}",
         "",
-        '<p class="module-intro">Start with the overview, complete the three lessons in order, then use the task and readiness check to apply what you learned.</p>',
+        '<p class="eyebrow">Module purpose</p>',
+        f'<div class="module-intro">{promise}</div>',
+        '<div class="module-orientation-grid">',
+        f'<section><h2>Before you begin</h2>{prerequisites}</section>',
+        f'<section><h2>Applied task</h2>{task}</section>',
+        f'<section><h2>Scope</h2>{scope}</section>',
+        '</div>',
+        f'<p><a class="primary-action" href="{first_lesson}">Begin Lesson 1</a></p>',
+        '<h2>Lessons</h2>',
         '<div class="module-step-grid">',
-        '<a class="module-step module-step-overview" href="overview.html"><span class="module-step-number">0</span><span><strong>Module overview</strong><small>Purpose, prerequisites, and expected result</small></span></a>',
         *lesson_cards,
         '</div>',
         '<section class="module-finish" aria-labelledby="module-finish-heading">',
@@ -625,24 +658,23 @@ def sequence_navigation(links: list[tuple[str, str]]) -> str:
 
 
 def lesson_nav_markup(index: int, sequence: list[tuple[int, Path]]) -> str:
-    module_num, _lesson = sequence[index]
+    module_num, lesson = sequence[index]
     links: list[tuple[str, str]] = []
-    if index > 0:
-        prev_module, prev_lesson = sequence[index - 1]
-        rel = Path("..") / f"module-{prev_module:02d}" / prev_lesson.with_suffix(".html").name
-        links.append((f"← Previous: {learner_lesson_title(prev_lesson)}", rel.as_posix()))
-    links.append((f"Module {module_num} home", "index.html"))
-    if index + 1 < len(sequence) and sequence[index + 1][0] == module_num:
-        next_module, next_lesson = sequence[index + 1]
-        rel = Path("..") / f"module-{next_module:02d}" / next_lesson.with_suffix(".html").name
-        links.append((f"Next: {learner_lesson_title(next_lesson)} →", rel.as_posix()))
+    module_lessons = [item for item in sequence if item[0] == module_num]
+    local_index = next(i for i, item in enumerate(module_lessons) if item[1] == lesson)
+    if local_index > 0:
+        prev_lesson = module_lessons[local_index - 1][1]
+        links.append((f"← Previous: {learner_lesson_title(prev_lesson)}", prev_lesson.with_suffix('.html').name))
+    elif module_num == 1:
+        links.append(("← Start Here", "../../start.html"))
     else:
-        links.append(
-            (
-                f"Continue to the Module {module_num} completion task →",
-                f"../../practice/module-{module_num:02d}-completion-task.html",
-            )
-        )
+        links.append((f"← Previous: Module {module_num - 1} readiness check", f"../../assessments/module-{module_num - 1:02d}-readiness-check.html"))
+    links.append((f"Module {module_num} home", "index.html"))
+    if local_index + 1 < len(module_lessons):
+        next_lesson = module_lessons[local_index + 1][1]
+        links.append((f"Next: {learner_lesson_title(next_lesson)} →", next_lesson.with_suffix('.html').name))
+    else:
+        links.append((f"Continue to the Module {module_num} applied task →", f"../../practice/module-{module_num:02d}-completion-task.html"))
     return sequence_navigation(links)
 
 
@@ -668,8 +700,8 @@ def main(output_dir: Path | None = None) -> None:
 <p class="home-lede">Build practical skill in defining tasks, guiding conversations, checking important claims, protecting sensitive information, and turning good work into repeatable workflows.</p>
 <div class="hero-actions">
 <a class="primary-action" href="start.html">Start the program</a>
-<a class="secondary-action" href="modules/module-01/index.html">Open Module 1</a>
 </div>
+<p class="returning-learner">Returning learner? Use <strong>Continue Learning</strong> below or in the navigation to open your next unfinished item.</p>
 <div class="course-facts" aria-label="Program facts">
 <span><strong>12</strong> modules</span>
 <span><strong>36</strong> focused lessons</span>
@@ -709,11 +741,14 @@ def main(output_dir: Path | None = None) -> None:
         "# Start Here",
         "",
         "Use this orientation once before beginning Module 1. Your answers and progress stay in this browser.",
+        "",
+        '<p class="start-action"><a class="primary-action" href="modules/module-01/index.html">Begin Module 1</a></p>',
     ]
     for path in sorted((ROOT / "site" / "start-here").glob("*.md")):
         text = path.read_text(encoding="utf-8")
         text = re.sub(r"^#\s+", "## ", text, count=1, flags=re.M)
         start_parts.append(text)
+    start_parts.append('<section class="start-next"><p class="eyebrow">Ready to begin</p><h2>Continue to Module 1</h2><p>The diagnostic is optional. Begin the shared foundation whenever you are ready.</p><p><a class="primary-action" href="modules/module-01/index.html">Begin Module 1</a></p></section>')
     write_page(
         OUT / "start.html",
         "Start Here",
@@ -757,7 +792,7 @@ Use the “I can do this” or completion button at the bottom of lessons, modul
 
     workspace_md = """# My Workspace
 
-Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone, and reference pages appear here. Everything stays in this browser unless you export your learning data.
+Bookmarks and notes saved from lessons, practice tasks, source packets, the capstone, and reference pages appear here. Everything stays in this browser unless you export your learning data.
 
 <div id="workspace-dashboard" class="workspace-dashboard" aria-live="polite"></div>
 
@@ -792,6 +827,7 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
                 "id": lesson_id,
                 "title": learner_lesson_title(lesson),
                 "module": module_num,
+                "lesson": int(re.search(r"(\d+)", lesson.stem).group(1)),
                 "url": f"modules/module-{module_num:02d}/{lesson.with_suffix('.html').name}",
             }
         )
@@ -806,20 +842,24 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         write_page(
             module_out / "index.html",
             f"Module {module_num}: {MODULE_NAMES[module_num]}",
-            module_page(module_num, lessons),
+            module_page(module_num, lessons, folder / "module-overview.md"),
             nav,
             page_kind="module",
         )
-        overview = folder / "module-overview.md"
-        if overview.exists():
-            write_page(
-                module_out / "overview.html",
-                title_from_markdown(overview),
-                overview.read_text(encoding="utf-8"),
-                nav,
-                page_id=f"module-{module_num:02d}-overview",
-                page_kind="overview",
-            )
+        write_page(
+            module_out / "overview.html",
+            f"Module {module_num} orientation moved",
+            f"""# Module {module_num} orientation moved
+
+The useful orientation material is now included directly on the Module {module_num} home page, so it no longer creates a separate step in the learning path.
+
+[Open Module {module_num}: {MODULE_NAMES[module_num]} →](index.html)
+""",
+            nav,
+            page_kind="redirect",
+            searchable=False,
+            page_label="Compatibility page",
+        )
 
     module_positions: dict[int, int] = {}
     for index, (module_num, lesson) in enumerate(sequence):
@@ -839,7 +879,7 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
             page_label=f"Lesson {local_position} of 3",
         )
 
-    practice_paths = sorted((ROOT / "practice").glob("*.md"))
+    practice_paths = sorted((ROOT / "practice").glob("module-??-completion-task.md"))
     for path in practice_paths:
         match = re.search(r"module-(\d+)", path.stem)
         module_num = int(match.group(1)) if match else 0
@@ -851,8 +891,11 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         )
         activity = ACTIVITIES.get(module_num)
         interactive = "\n\n" + activity_markup(activity) if activity else ""
+        module_lesson_paths = [lesson for current_module, lesson in sequence if current_module == module_num]
+        last_lesson = module_lesson_paths[-1]
         task_text = path.read_text(encoding="utf-8") + interactive + sequence_navigation(
             [
+                (f"← Previous: {learner_lesson_title(last_lesson)}", f"../modules/module-{module_num:02d}/{last_lesson.with_suffix('.html').name}"),
                 (f"Module {module_num} home", f"../modules/module-{module_num:02d}/index.html"),
                 ("Continue to the readiness check →", f"../assessments/module-{module_num:02d}-readiness-check.html"),
             ]
@@ -864,7 +907,21 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
             nav,
             page_id=task_id,
             page_kind="practice",
+            effort_label=PRACTICE_EFFORT_LABELS[module_num],
         )
+    packet_path = ROOT / "practice" / "module-07-source-packet.md"
+    write_page(
+        OUT / "practice" / "module-07-source-packet.html",
+        title_from_markdown(packet_path),
+        packet_path.read_text(encoding="utf-8") + sequence_navigation([
+            ("← Return to Module 7 task", "module-07-completion-task.html"),
+            ("Module 7 home", "../modules/module-07/index.html"),
+        ]),
+        nav,
+        page_id="module-07-source-packet",
+        page_kind="source-packet",
+    )
+
     for record in ASSESSMENTS:
         module_num = int(record["module"])
         title = str(record["title"])
@@ -876,6 +933,7 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         if module_num < 12:
             continuation = sequence_navigation(
                 [
+                    (f"← Previous: Module {module_num} applied task", f"../practice/module-{module_num:02d}-completion-task.html"),
                     (f"Module {module_num} home", f"../modules/module-{module_num:02d}/index.html"),
                     (f"Continue to Module {module_num + 1} →", f"../modules/module-{module_num + 1:02d}/index.html"),
                 ]
@@ -883,6 +941,7 @@ Bookmarks and notes saved from lessons, practice tasks, overviews, the capstone,
         else:
             continuation = sequence_navigation(
                 [
+                    ("← Previous: Module 12 applied task", "../practice/module-12-completion-task.html"),
                     ("Module 12 home", "../modules/module-12/index.html"),
                     ("Continue to the capstone →", "../capstone/capstone-project.html"),
                 ]

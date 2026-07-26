@@ -31,3 +31,6 @@ A successful task brief:
 
 ## Example of a successful brief
 “Create a practical event plan for a three-hour neighborhood gathering that helps approximately 40 new and longtime residents meet. The event will be held in the community room on a Saturday afternoon next month. The total budget is $600, and food must include at least one vegetarian option. Prefer activities that require no special equipment.”
+
+
+> **Use this tool:** [Core Prompt Pattern](../reference/core-prompt-pattern.html) to check that the result, context, and boundaries remain easy to find.

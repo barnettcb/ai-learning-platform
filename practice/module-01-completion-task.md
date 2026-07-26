@@ -1,14 +1,4 @@
-# Module 1 Completion Task — Match the Tool to the Task
-
-## Instructions
-For each of the four scenarios, choose one category:
-- Well suited
-- Useful with human review
-- Poorly suited
-
-Then identify:
-1. The main risk
-2. The human responsibility that remains
+# Module 1 Completion Task — Recognize AI Strengths and Limits
 
 ## Scenarios
 1. Generate possible themes for a neighborhood event.
@@ -16,9 +6,17 @@ Then identify:
 3. Rewrite a long email so it is easier to understand.
 4. Confirm the filing deadline for a current government program.
 
+## Instructions
+For each scenario:
+1. identify what AI is being asked to do;
+2. name the main limitation or risk; and
+3. state the human responsibility that remains.
+
+This task is about how the tool behaves—not yet the full decision process for whether and how to use it. Module 2 covers that next.
+
 ## Evaluation criteria
 A successful response:
-- does not classify the entire scenario solely by whether AI can produce an answer;
-- distinguishes assistance from authority;
-- identifies current or consequential claims that require verification;
-- keeps human judgment and accountability with the learner or qualified professional.
+- recognizes drafting, transformation, pattern generation, or retrieval tasks;
+- does not treat fluent language as authority;
+- notices when current facts, professional judgment, or real-world examination are missing;
+- keeps verification, decisions, and action with the responsible person.

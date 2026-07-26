@@ -50,11 +50,11 @@ The core curriculum is organized into twelve modules. Each module contains three
 - Lesson 27: Working with images
 - Completion task: Extract, compare, and summarize information from mixed inputs.
 
-### Module 8 — Write and Learn
+### Module 8 — Write, Learn, and Apply
 - Lesson 18: Writing and rewriting
 - Lesson 24: Education and skill building
 - Lesson 25: Hobbies, travel, and everyday life
-- Completion task: Complete one writing task and one learning task using distinct workflows.
+- Completion task: Complete a writing workflow, an active-learning workflow, and a low-stakes everyday application using distinct instructions and review methods.
 
 ### Module 9 — Plan and Decide
 - Lesson 20: Planning and project management

@@ -12,7 +12,7 @@ Each module contains three focused lessons, one applied completion task, and one
 ## Your first session
 
 1. Complete the initial self-assessment without looking for “perfect” answers.
-2. Open Module 1 and read its overview.
+2. Open Module 1 and begin Lesson 1.
 3. Finish Lesson 1 and try its action step.
 4. Mark the lesson complete only when you can perform the final check.
 

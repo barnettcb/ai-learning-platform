@@ -1,4 +1,4 @@
-# Module 8 Completion Task — Complete a Writing and Learning Workflow
+# Module 8 Completion Task — Write, Learn, and Apply
 
 ## Part A — Writing task
 Choose a real message, explanation, or short document. Use AI for one clearly defined stage of the writing process.
@@ -20,14 +20,21 @@ Create a short tutoring sequence that:
 4. provides feedback without doing all the work;
 5. includes a final performance check.
 
+## Part C — Everyday application
+Choose a low-stakes hobby, travel, household, or everyday decision. Create a request that:
+1. identifies the preferences and constraints that genuinely change the answer;
+2. asks for a small number of options with visible tradeoffs;
+3. minimizes unnecessary personal information; and
+4. lists current details that must be confirmed before acting.
+
 ## Evaluation criteria
 A successful submission:
 - matches the AI role to the actual stage of work;
 - defines what “good” means in each task;
-- preserves human responsibility for the final writing;
+- preserves human responsibility for the final writing and decision;
 - uses active practice rather than passive explanation;
 - makes factual or safety limits visible;
 - avoids unnecessary personal or sensitive information.
 
 ## Required review note
-Explain one important difference between directing AI as a writing assistant and directing it as a tutor.
+Explain one important difference among directing AI as a writing assistant, a tutor, and an everyday planning aid.

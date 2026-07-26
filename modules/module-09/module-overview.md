@@ -1,7 +1,7 @@
 # Module 9 — Plan and Decide
 
 ## Module promise
-By the end of this module, learners can use AI to organize a plan, compare alternatives, and select an appropriate AI approach without treating the system as the final decision-maker.
+By the end of this module, you can use AI to organize a plan, compare alternatives, and select an appropriate AI approach without treating the system as the final decision-maker.
 
 ## Prerequisites
 Modules 2–6.
@@ -14,5 +14,5 @@ Modules 2–6.
 ## Completion task
 Create a practical plan, evaluate at least three alternatives, and explain why the chosen AI approach fits the task, information, and risk level.
 
-## Deliberate exclusions
-This module does not teach financial or medical judgment, reusable prompt libraries, long-running project continuity, or formal quality assurance. Those concepts retain separate homes.
+## Scope
+This module supports planning and decision structure. Values, accountability, and acceptance of consequences remain human responsibilities.

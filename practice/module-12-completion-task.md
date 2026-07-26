@@ -28,3 +28,6 @@ A successful submission:
 
 ## Required reflection
 Name one part of the workflow you expect to revise after real use and the evidence that would justify the change.
+
+
+> **Use these tools:** [Project Handoff Template](../reference/project-handoff-template.html) and [Core Workflow](../reference/core-workflow.html) to make the project restartable.

@@ -29,3 +29,6 @@ A successful response:
 2. **Do not use AI for this task** in a personal account. Use the organization's approved process and authorized systems.
 3. **Use AI with safeguards.** Remove identifying details and use the result only to prepare for professional care.
 4. **Use AI normally**, while independently confirming current prices, availability, and restrictions before booking.
+
+
+> **Use this tool:** [Privacy Before Sharing](../reference/privacy-before-sharing.html) before deciding what information can enter the workflow.

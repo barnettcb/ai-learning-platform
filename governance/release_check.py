@@ -48,6 +48,7 @@ def main() -> None:
         "py_compile",
         "governance/content-audit.py",
         "governance/site-audit.py",
+        "governance/browser-audit.py",
         "governance/release_check.py",
         "governance/generated-consistency.py",
         "site/build_site.py",

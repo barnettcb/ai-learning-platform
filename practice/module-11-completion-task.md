@@ -25,3 +25,6 @@ A successful submission:
 
 ## Required reflection
 Identify one element you removed because it belonged only to the original task and one element you retained because it supports quality across cases.
+
+
+> **Use this tool:** [Output Review Checklist](../reference/output-review-checklist.html) when defining the workflow’s quality gate.

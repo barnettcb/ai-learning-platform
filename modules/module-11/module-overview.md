@@ -1,7 +1,7 @@
 # Module 11 — Make Good Work Repeatable
 
 ## Module promise
-By the end of this module, learners can turn a successful AI interaction into a reusable process without assuming the same prompt will work unchanged every time.
+By the end of this module, you can turn a successful AI interaction into a reusable process without assuming the same prompt will work unchanged every time.
 
 ## Prerequisites
 Modules 3 through 9.
@@ -14,5 +14,5 @@ Modules 3 through 9.
 ## Completion task
 Convert one useful AI interaction into a flexible workflow with a template, review checklist, and clear conditions for adaptation.
 
-## Deliberate exclusions
-This module does not teach automation, APIs, or software integrations. It focuses on repeatability that an everyday user can apply manually.
+## Scope
+This module focuses on manual repeatability for everyday users, not automation, APIs, or software integrations.

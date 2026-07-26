@@ -166,10 +166,17 @@
       questions.forEach((question, index) => {
         const value = savedAssessment.choices[index];
         const input = question.querySelector(`input[value="${value}"]`);
-        if (input) input.checked = true;
+        const expected = Number(question.dataset.answer);
+        const explanation = question.querySelector('[data-explanation]');
+        if (input) {
+          input.checked = true;
+          const isCorrect = Number(value) === expected;
+          question.classList.add(isCorrect ? 'is-correct' : 'is-incorrect');
+          if (explanation) explanation.hidden = false;
+        }
       });
       if (result && Number.isInteger(savedAssessment.score)) {
-        result.textContent = `Last attempt: ${savedAssessment.score} of ${questions.length} correct.${savedAssessment.passed ? ' Readiness check complete ✓' : ' Review and retry when ready.'}`;
+        result.textContent = `Last attempt: ${savedAssessment.score} of ${questions.length} correct.${savedAssessment.passed ? ' Readiness check complete ✓' : ' Use the review links below, then retry when ready.'}`;
         result.classList.toggle('is-passed', Boolean(savedAssessment.passed));
       }
     } else if (readProgress().has(pageId) && result) {
@@ -234,10 +241,6 @@
     const status = activity.querySelector('[data-activity-status]');
     const reviewButton = activity.querySelector('[data-activity-review]');
     const clearButton = activity.querySelector('[data-activity-clear]');
-    const challenge = activity.querySelector('[data-activity-challenge]');
-    const challengeChoices = challenge ? [...challenge.querySelectorAll('[data-challenge-choice]')] : [];
-    const challengeButton = challenge ? challenge.querySelector('[data-challenge-check]') : null;
-    const challengeFeedback = challenge ? challenge.querySelector('[data-challenge-feedback]') : null;
     const allResponses = readResponses();
     const saved = allResponses[activityId] && typeof allResponses[activityId] === 'object'
       ? allResponses[activityId]
@@ -248,17 +251,10 @@
       if (key && typeof saved[key] === 'string') input.value = saved[key];
     });
 
-    if (challengeChoices.length && typeof saved.__challenge === 'string') {
-      const savedChoice = challengeChoices.find((choice) => choice.value === saved.__challenge);
-      if (savedChoice) savedChoice.checked = true;
-    }
-
     const renderActivityProgress = () => {
       const required = inputs.filter((input) => input.dataset.required === 'true');
-      const challengeTotal = challengeChoices.length ? 1 : 0;
-      const challengeComplete = challengeChoices.some((choice) => choice.checked) ? 1 : 0;
-      const complete = required.filter((input) => input.value.trim()).length + challengeComplete;
-      const total = required.length + challengeTotal;
+      const complete = required.filter((input) => input.value.trim()).length;
+      const total = required.length;
       const percent = total ? Math.round((complete / total) * 100) : 100;
       if (count) count.textContent = `${complete} of ${total}`;
       if (progressBar) progressBar.style.width = `${percent}%`;
@@ -275,8 +271,6 @@
         const key = input.dataset.responseKey;
         if (key && input.value.trim()) values[key] = input.value.slice(0, 20000);
       });
-      const selectedChallenge = challengeChoices.find((choice) => choice.checked);
-      if (selectedChallenge) values.__challenge = selectedChallenge.value;
       if (Object.keys(values).length) next[activityId] = values;
       else delete next[activityId];
       writeResponses(next);
@@ -285,29 +279,6 @@
         : 'Worksheet is empty.';
       renderActivityProgress();
     };
-
-    challengeChoices.forEach((choice) => {
-      choice.addEventListener('change', () => {
-        if (challengeFeedback) challengeFeedback.textContent = 'Selection saved. Check your decision when ready.';
-        saveActivity();
-      });
-    });
-
-    if (challengeButton) {
-      challengeButton.addEventListener('click', () => {
-        const selected = challengeChoices.find((choice) => choice.checked);
-        if (!selected) {
-          if (challengeFeedback) challengeFeedback.textContent = 'Choose an answer before checking your decision.';
-          challengeChoices[0]?.focus();
-          return;
-        }
-        const correct = Number(selected.value) === Number(challengeButton.dataset.answer);
-        challenge.classList.toggle('is-correct', correct);
-        challenge.classList.toggle('is-incorrect', !correct);
-        const rationale = challengeFeedback ? challengeFeedback.dataset.explanation : '';
-        if (challengeFeedback) challengeFeedback.textContent = `${correct ? 'Good decision.' : 'Not the strongest choice yet.'} ${rationale}`;
-      });
-    }
 
     inputs.forEach((input) => {
       input.addEventListener('input', () => {
@@ -321,13 +292,13 @@
 
     if (reviewButton) {
       reviewButton.addEventListener('click', () => {
-        const result = renderActivityProgress();
+        const state = renderActivityProgress();
         const firstMissing = inputs.find((input) => input.dataset.required === 'true' && !input.value.trim());
         if (firstMissing) {
-          if (status) status.textContent = `${result.total - result.complete} required response${result.total - result.complete === 1 ? '' : 's'} still open.`;
+          if (status) status.textContent = `${state.total - state.complete} required response${state.total - state.complete === 1 ? '' : 's'} still open.`;
           firstMissing.focus();
-        } else {
-          if (status) status.textContent = 'All required responses are complete. Compare your work with the evaluation criteria, then mark the task complete below.';
+        } else if (status) {
+          status.textContent = 'All required responses are complete. Compare your work with the evaluation criteria, then mark the task complete below.';
         }
       });
     }
@@ -336,9 +307,6 @@
       clearButton.addEventListener('click', () => {
         if (!window.confirm('Clear every response in this worksheet?')) return;
         inputs.forEach((input) => { input.value = ''; });
-        challengeChoices.forEach((choice) => { choice.checked = false; });
-        if (challenge) challenge.classList.remove('is-correct', 'is-incorrect');
-        if (challengeFeedback) challengeFeedback.textContent = '';
         const next = readResponses();
         delete next[activityId];
         writeResponses(next);
@@ -412,58 +380,113 @@
     const result = diagnosticForm.querySelector('[data-diagnostic-result]');
     const savedDiagnostic = readResponses()[diagnosticId] || {};
 
-    questions.forEach((question, index) => {
-      const savedValue = savedDiagnostic[`q${index + 1}`];
-      if (typeof savedValue === 'string') {
-        const choice = question.querySelector(`input[value="${savedValue}"]`);
-        if (choice) choice.checked = true;
-      }
-    });
+    const moduleLinks = (question) => String(question.dataset.modules || '')
+      .split(';')
+      .map((item) => item.split('|'))
+      .filter((parts) => parts.length === 2)
+      .map(([label, url]) => `<a href="${escapeHtml(url)}">${escapeHtml(label)}</a>`)
+      .join(', ');
 
-    const saveDiagnostic = () => {
+    const chosenText = (question) => {
+      const selected = question.querySelector('input[type="radio"]:checked');
+      return selected ? selected.closest('label')?.textContent.trim() || '' : '';
+    };
+
+    const preferredText = (question) => {
+      const preferred = question.querySelector('input[value="2"]');
+      return preferred ? preferred.closest('label')?.textContent.trim() || '' : '';
+    };
+
+    const saveDiagnostic = (submitted = false, score = null) => {
       const next = readResponses();
       const values = {};
       questions.forEach((question, index) => {
         const selected = question.querySelector('input[type="radio"]:checked');
         if (selected) values[`q${index + 1}`] = selected.value;
       });
-      if (Object.keys(values).length) next[diagnosticId] = values;
-      else delete next[diagnosticId];
+      if (Object.keys(values).length) {
+        values.submitted = submitted;
+        if (Number.isInteger(score)) values.score = score;
+        next[diagnosticId] = values;
+      } else {
+        delete next[diagnosticId];
+      }
       writeResponses(next);
     };
 
-    questions.forEach((question) => {
-      question.addEventListener('change', saveDiagnostic);
+    const clearDiagnosticDisplay = () => {
+      questions.forEach((question) => {
+        question.classList.remove('is-strong', 'is-developing', 'is-risky');
+        const feedback = question.querySelector('[data-diagnostic-feedback]');
+        if (feedback) {
+          feedback.hidden = true;
+          feedback.textContent = '';
+        }
+      });
+      if (result) result.innerHTML = '';
+    };
+
+    const renderDiagnostic = () => {
+      let score = 0;
+      const strengths = [];
+      const focusAreas = [];
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const value = Number(selected?.value || 0);
+        const classification = value === 2 ? 'Strong starting choice' : value === 1 ? 'Developing choice' : 'Risky choice';
+        score += value;
+        question.classList.remove('is-strong', 'is-developing', 'is-risky');
+        question.classList.add(value === 2 ? 'is-strong' : value === 1 ? 'is-developing' : 'is-risky');
+        const feedback = question.querySelector('[data-diagnostic-feedback]');
+        if (feedback) {
+          feedback.hidden = false;
+          feedback.innerHTML = `<strong>${classification}.</strong> Your choice: ${escapeHtml(chosenText(question))}<br><strong>Preferred response:</strong> ${escapeHtml(preferredText(question))}<br>${escapeHtml(question.dataset.rationale || '')}<br><strong>Review:</strong> ${moduleLinks(question)}`;
+        }
+        const item = { title: question.dataset.focusTitle || question.dataset.focus || 'this area', links: moduleLinks(question) };
+        if (value === 2) strengths.push(item);
+        else focusAreas.push(item);
+      });
+      const summary = score >= 8
+        ? 'You already show strong judgment in most of the situations.'
+        : score >= 5
+          ? 'You have several sound instincts, with some habits to make more consistent.'
+          : 'The foundations will help you slow down the decision process and keep responsibility visible.';
+      const list = (items, emptyText) => items.length
+        ? `<ul>${items.map((item) => `<li><strong>${escapeHtml(item.title)}</strong>${item.links ? ` — ${item.links}` : ''}</li>`).join('')}</ul>`
+        : `<p>${escapeHtml(emptyText)}</p>`;
+      if (result) {
+        result.innerHTML = `<section class="diagnostic-summary"><p class="eyebrow">Your starting point</p><h3>${score} of 10 points</h3><p>${escapeHtml(summary)}</p><div class="diagnostic-columns"><div><h4>Current strengths</h4>${list(strengths, 'No area reached the preferred response yet. That is a useful baseline, not a failure.')}</div><div><h4>Focus areas</h4>${list(focusAreas, 'No immediate weak area appeared. Complete the full course to make the habits repeatable.')}</div></div><p><strong>Next step:</strong> Everyone begins with <a href="modules/module-01/index.html">Module 1</a> so the program uses one shared foundation.</p></section>`;
+      }
+      saveDiagnostic(true, score);
+    };
+
+    questions.forEach((question, index) => {
+      const savedValue = savedDiagnostic[`q${index + 1}`];
+      if (typeof savedValue === 'string') {
+        const choice = question.querySelector(`input[value="${savedValue}"]`);
+        if (choice) choice.checked = true;
+      }
+      question.addEventListener('change', () => {
+        clearDiagnosticDisplay();
+        saveDiagnostic(false, null);
+      });
     });
 
-    if (submit) submit.addEventListener('click', () => {
+    if (savedDiagnostic.submitted && questions.every((question) => question.querySelector('input[type="radio"]:checked'))) {
+      renderDiagnostic();
+    }
+
+    submit?.addEventListener('click', () => {
       const unanswered = questions.find((question) => !question.querySelector('input[type="radio"]:checked'));
       if (unanswered) {
         if (result) result.textContent = 'Answer all five questions to see your starting point.';
         unanswered.querySelector('input')?.focus();
         return;
       }
-      let score = 0;
-      const focus = [];
-      questions.forEach((question) => {
-        const selected = question.querySelector('input[type="radio"]:checked');
-        const value = Number(selected?.value || 0);
-        score += value;
-        if (value < 2) focus.push(question.dataset.focus);
-      });
-      saveDiagnostic();
-      const uniqueFocus = [...new Set(focus)].slice(0, 2);
-      const summary = score >= 8
-        ? 'You already show strong judgment in most areas.'
-        : score >= 5
-          ? 'You have several sound instincts, with a few areas to make more consistent.'
-          : 'Start with the foundations and practice the decision process one step at a time.';
-      const nextFocus = uniqueFocus.length
-        ? ` Pay particular attention to ${uniqueFocus.join(' and ')}.`
-        : ' Continue through the full path to make those habits repeatable.';
-      if (result) result.textContent = `${summary}${nextFocus}`;
+      renderDiagnostic();
     });
   }
+
 
   const bookmarkButton = document.querySelector('[data-bookmark-toggle]');
   if (pageId && bookmarkButton) {
@@ -528,6 +551,19 @@
   renderNextStep(document.getElementById('continue-learning'));
   renderNextStep(document.getElementById('next-recommended-step'), 'Next recommended step');
 
+  const completedForContinue = readProgress();
+  const nextForContinue = guidedPath.find((item) => !completedForContinue.has(item.id));
+  const courseRoot = document.querySelector('.brand')?.href || window.location.href;
+  document.querySelectorAll('[data-continue-link]').forEach((link) => {
+    if (nextForContinue) {
+      link.href = new URL(nextForContinue.url, courseRoot).href;
+      link.setAttribute('aria-label', `Continue Learning: ${nextForContinue.title}`);
+    } else {
+      link.href = new URL('completion.html', courseRoot).href;
+      link.setAttribute('aria-label', 'Continue Learning: course completion summary');
+    }
+  });
+
   const dashboard = document.getElementById('progress-dashboard');
   if (dashboard && lessons.length) {
     const completed = readProgress();
@@ -544,12 +580,19 @@
     const responseData = readResponses();
     const missedLessonChecks = Object.entries(responseData)
       .filter(([key, value]) => key.startsWith('lesson-check-') && value && value.correct === false)
-      .length;
+      .map(([key]) => Number(key.replace('lesson-check-', '')))
+      .map((number) => lessons.find((lesson) => Number(lesson.lesson) === number))
+      .filter(Boolean);
     const openReadiness = Object.entries(responseData)
       .filter(([key, value]) => key.includes('readiness-check') && value && value.passed === false)
-      .length;
-    const reviewHtml = missedLessonChecks || openReadiness
-      ? `<section class="progress-review"><h2>Review focus</h2><p>${missedLessonChecks ? `${missedLessonChecks} lesson decision${missedLessonChecks === 1 ? '' : 's'} to revisit. ` : ''}${openReadiness ? `${openReadiness} readiness check${openReadiness === 1 ? '' : 's'} not yet passed.` : ''}</p><p><a href="practice/index.html">Open practice and readiness checks</a></p></section>`
+      .map(([key]) => milestones.find((item) => item.id === key))
+      .filter(Boolean);
+    const reviewItems = [
+      ...missedLessonChecks.map((lesson) => `<li><a href="${lesson.url}">${escapeHtml(lesson.title)}</a> — revisit the lesson decision check</li>`),
+      ...openReadiness.map((item) => `<li><a href="${item.url}">${escapeHtml(item.title)}</a> — review the explanations and linked lessons</li>`),
+    ];
+    const reviewHtml = reviewItems.length
+      ? `<section class="progress-review"><h2>Review focus</h2><p>Open the exact item that needs another look:</p><ul>${reviewItems.join('')}</ul></section>`
       : '';
     const completionHtml = totalCount > 0 && completeCount === totalCount
       ? '<section class="course-complete"><h2>Course complete</h2><p>You have completed every lesson, applied task, readiness check, and the capstone.</p><p><a href="completion.html">Open the completion summary</a> to review or print a personal record.</p></section>'
@@ -649,7 +692,7 @@
       .map((id) => ({ ...pageRecord(id), id, note: typeof notes[id] === 'string' ? notes[id] : '', bookmarked: bookmarks.has(id) }))
       .sort((a, b) => String(a.title).localeCompare(String(b.title)));
     if (!items.length) {
-      workspace.innerHTML = '<p>No saved pages yet. Use the bookmark button or notes field on a lesson, task, overview, capstone, or reference page.</p>';
+      workspace.innerHTML = '<p>No saved pages yet. Use the bookmark button or notes field on a lesson, task, source packet, capstone, or reference page.</p>';
     } else {
       workspace.innerHTML = items.map((item) => {
         const title = item.url

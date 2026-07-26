@@ -32,3 +32,6 @@ A successful submission:
 
 ## Required review note
 Describe the most serious plausible harm if the AI output were wrong and the safeguard that reduces that risk.
+
+
+> **Use this tool:** [Output Review Checklist](../reference/output-review-checklist.html) before relying on any high-stakes summary.

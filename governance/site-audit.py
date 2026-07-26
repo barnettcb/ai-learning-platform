@@ -48,8 +48,8 @@ def css_property(rule: str | None, name: str) -> str | None:
 def audit() -> list[str]:
     failures: list[str] = []
     html_files = sorted(SITE.rglob("*.html"))
-    if len(html_files) < 100:
-        failures.append(f"expected at least 100 HTML pages, found {len(html_files)}")
+    if len(html_files) < 102:
+        failures.append(f"expected at least 102 HTML pages with compatibility overview routes, found {len(html_files)}")
     required = [
         SITE / "index.html",
         SITE / "start.html",
@@ -65,6 +65,7 @@ def audit() -> list[str]:
         SITE / ".nojekyll",
         SITE / "404.html",
         SITE / "completion.html",
+        SITE / "practice" / "module-07-source-packet.html",
     ]
     for path in required:
         if not path.exists():
@@ -83,6 +84,8 @@ def audit() -> list[str]:
         meta_height = css_property(css_rule(css, ".page-meta span:not(:nth-child(2))"), "min-height")
         if meta_height != "30px":
             failures.append(f"page metadata chips must use a 30px minimum height, found {meta_height!r}")
+        if ".lesson-navigation a, .lesson-navigation a:last-child { flex: 0 0 auto;" not in css:
+            failures.append("mobile sequence actions must reset the desktop flex basis")
 
     for path in html_files:
         parser = LinkParser()
@@ -145,10 +148,26 @@ def audit() -> list[str]:
                 failures.append(f"completion page missing control: {token}")
 
     module_pages = list((SITE / "modules").glob("module-*/index.html"))
+    compatibility_overviews = list((SITE / "modules").glob("module-*/overview.html"))
+    if len(compatibility_overviews) != 12:
+        failures.append(f"expected twelve compatibility overview routes, found {len(compatibility_overviews)}")
+    for path in compatibility_overviews:
+        text = path.read_text(encoding="utf-8")
+        module_num = int(re.search(r"module-(\d+)", path.as_posix()).group(1))
+        for token in (f"Module {module_num} orientation moved", f'href="index.html"'):
+            if token not in text:
+                failures.append(f"compatibility overview route missing handoff element {token}: {path.relative_to(ROOT)}")
+        if "Deliberate exclusions" in text or 'class="module-orientation-grid"' in text:
+            failures.append(f"compatibility overview route should not duplicate module orientation: {path.relative_to(ROOT)}")
     for path in module_pages:
         text = path.read_text(encoding="utf-8")
-        if text.count('class="module-step') < 4 or 'class="module-finish"' not in text:
-            failures.append(f"module landing page missing simplified learning path: {path.relative_to(ROOT)}")
+        for token in ('class="module-orientation-grid"', 'class="primary-action"', 'class="module-finish"'):
+            if token not in text:
+                failures.append(f"module landing page missing consolidated orientation element {token}: {path.relative_to(ROOT)}")
+        if text.count('class="module-step"') != 3:
+            failures.append(f"module landing page should contain exactly three lesson steps: {path.relative_to(ROOT)}")
+        if "overview.html" in text or "Deliberate exclusions" in text:
+            failures.append(f"module landing page retains obsolete overview path or internal wording: {path.relative_to(ROOT)}")
 
     practice_hub = SITE / "practice" / "index.html"
     if practice_hub.exists():
@@ -159,9 +178,11 @@ def audit() -> list[str]:
     start_page = SITE / "start.html"
     if start_page.exists():
         text = start_page.read_text(encoding="utf-8")
-        for token in ("data-initial-assessment", "data-diagnostic-question", "data-diagnostic-submit", "data-diagnostic-result"):
+        for token in ("data-initial-assessment", "data-diagnostic-question", "data-diagnostic-submit", "data-diagnostic-result", "data-diagnostic-feedback", "data-rationale", "data-modules"):
             if token not in text:
                 failures.append(f"interactive opening diagnostic missing control: {token}")
+        if text.count('href="modules/module-01/index.html"') < 2 or text.count('>Begin Module 1</a>') < 2:
+            failures.append("Start Here must provide a prominent Module 1 action before and after the diagnostic")
 
     home_page = SITE / "index.html"
     if home_page.exists():
@@ -170,9 +191,11 @@ def audit() -> list[str]:
             failures.append("simplified navigation missing expandable Modules section")
         if text.count('class="nav-item"><a') != 5:
             failures.append("simplified navigation should expose exactly five direct primary links")
-        for token in ('class="home-hero"', 'class="home-stage-grid"', 'class="course-facts"', 'id="continue-learning"'):
+        for token in ('class="home-hero"', 'class="home-stage-grid"', 'class="course-facts"', 'id="continue-learning"', 'data-continue-link'):
             if token not in text:
                 failures.append(f"home page missing orientation element: {token}")
+        if 'Open Module 1' in text:
+            failures.append("home page should not offer a first-time orientation bypass")
         if text.count('<div><span>') != 4:
             failures.append("home page should show exactly four learning stages")
         if "<title>Practical AI Learning</title>" not in text:
@@ -235,8 +258,8 @@ def audit() -> list[str]:
             failures.append(f"practice page missing completion control: {path.relative_to(ROOT)}")
         if not re.search(r'<nav class="lesson-navigation"[^>]*>.*?<a href=', text, flags=re.S):
             failures.append(f"practice sequence navigation is not rendered as links: {path.relative_to(ROOT)}")
-        if "About 10–20 min" not in text:
-            failures.append(f"practice page missing activity-time metadata: {path.relative_to(ROOT)}")
+        if not any(label in text for label in ("Short worksheet · About", "Focused application · About", "Extended application · About")):
+            failures.append(f"practice page missing differentiated effort metadata: {path.relative_to(ROOT)}")
         for token in (
             "data-interactive-activity",
             "data-activity-input",
@@ -245,13 +268,12 @@ def audit() -> list[str]:
             "data-activity-review",
             "data-activity-clear",
             "data-activity-status",
-            "data-activity-challenge",
-            "data-challenge-choice",
-            "data-challenge-check",
-            "data-challenge-feedback",
         ):
             if token not in text:
                 failures.append(f"practice page missing interactive control {token}: {path.relative_to(ROOT)}")
+        for obsolete in ("data-activity-challenge", "data-challenge-choice", "data-challenge-check", "data-challenge-feedback"):
+            if obsolete in text:
+                failures.append(f"practice page retains redundant task decision challenge {obsolete}: {path.relative_to(ROOT)}")
 
 
     assessment_pages = list((SITE / "assessments").glob("module-*-readiness-check.html"))
@@ -265,9 +287,9 @@ def audit() -> list[str]:
             failures.append(f"assessment sequence navigation is not rendered as links: {path.relative_to(ROOT)}")
         if "About 5 min" not in text:
             failures.append(f"assessment page missing activity-time metadata: {path.relative_to(ROOT)}")
-        for token in ("data-assessment-form", "data-question", "data-answer", "data-assessment-result"):
+        for token in ("data-assessment-form", "data-question", "data-answer", "data-assessment-result", "data-explanation", "Review Lesson"):
             if token not in text:
-                failures.append(f"assessment page missing control {token}: {path.relative_to(ROOT)}")
+                failures.append(f"assessment page missing control or direct review link {token}: {path.relative_to(ROOT)}")
 
     capstone_page = SITE / "capstone" / "capstone-project.html"
     if capstone_page.exists():
@@ -289,7 +311,7 @@ def audit() -> list[str]:
 
     study_pages = lesson_pages + practice_pages + assessment_pages + [capstone_page]
     study_pages += list((SITE / "reference").glob("*.html"))
-    study_pages += list((SITE / "modules").glob("module-*/overview.html"))
+    study_pages += [SITE / "practice" / "module-07-source-packet.html"]
     study_pages = [path for path in study_pages if path.exists() and path.name != "index.html"]
     for path in study_pages:
         text = path.read_text(encoding="utf-8")
@@ -342,6 +364,10 @@ def audit() -> list[str]:
             "responsesKey",
             "activity_responses",
             "data-interactive-activity",
+            "data-continue-link",
+            "Review focus",
+            "Open the exact item",
+            "diagnostic-summary",
             "workspace-dashboard",
             "data-assessment-form",
             "Readiness check complete",
@@ -372,6 +398,78 @@ def audit() -> list[str]:
             check_marker = f'"id": "module-{module_num:02d}-readiness-check"'
             if lesson_marker not in text or task_marker not in text or check_marker not in text:
                 failures.append(f"guided path missing Module {module_num} records")
+
+    outcomes_page = SITE / "outcomes.html"
+    if outcomes_page.exists():
+        outcome_text = outcomes_page.read_text(encoding="utf-8")
+        linked_lessons = set(re.findall(r'href="modules/module-\d{2}/lesson-(\d{2})\.html"', outcome_text))
+        expected_lessons = {f"{number:02d}" for number in range(1, 37)}
+        missing = sorted(expected_lessons - linked_lessons)
+        if missing:
+            failures.append("learning outcomes map does not cover all 36 lessons: " + ", ".join(missing))
+
+    source_packet = SITE / "practice" / "module-07-source-packet.html"
+    module_seven_task = SITE / "practice" / "module-07-completion-task.html"
+    if source_packet.exists():
+        packet_text = source_packet.read_text(encoding="utf-8")
+        for token in ("Source A", "Source B", "Source C", "Table total", "source-table", "table-scroll-hint", "source-figure"):
+            if token not in packet_text:
+                failures.append(f"Module 7 source packet missing required source element: {token}")
+    if module_seven_task.exists() and "module-07-source-packet.html" not in module_seven_task.read_text(encoding="utf-8"):
+        failures.append("Module 7 applied task does not link to the supplied source packet")
+
+    checks = json.loads((ROOT / "assessments" / "module-checks.json").read_text(encoding="utf-8"))
+    checks_by_module = {int(record["module"]): record for record in checks}
+    if len(checks_by_module[5]["questions"]) != 3:
+        failures.append("Module 5 readiness must assess the use of examples")
+    if len(checks_by_module[8]["questions"]) != 3:
+        failures.append("Module 8 readiness must assess writing, learning, and everyday application")
+    if any("review_lesson" not in question for record in checks for question in record["questions"]):
+        failures.append("every readiness question must identify a direct review lesson")
+    module_three_text = " ".join(question["prompt"] for question in checks_by_module[3]["questions"]).lower()
+    if any(term in module_three_text for term in ("tone", "format", "example")):
+        failures.append("Module 3 readiness tests a skill taught in a later module")
+    module_four_text = " ".join(question["prompt"] for question in checks_by_module[4]["questions"]).lower()
+    if "example" in module_four_text:
+        failures.append("Module 4 readiness tests examples before Module 5")
+
+    activity_records = json.loads((ROOT / "practice" / "activity-bank.json").read_text(encoding="utf-8"))
+    if any("challenge" in record for record in activity_records):
+        failures.append("activity source data retains redundant task decision challenges")
+
+    module_blueprint = (ROOT / "curriculum" / "module-blueprint.md").read_text(encoding="utf-8")
+    if "### Module 8 — Write, Learn, and Apply" not in module_blueprint:
+        failures.append("curriculum blueprint retains the obsolete Module 8 title")
+
+    contextual_pages = [
+        SITE / "practice" / "module-02-completion-task.html",
+        SITE / "practice" / "module-03-completion-task.html",
+        SITE / "practice" / "module-04-completion-task.html",
+        SITE / "practice" / "module-05-completion-task.html",
+        SITE / "practice" / "module-06-completion-task.html",
+        SITE / "practice" / "module-10-completion-task.html",
+        SITE / "practice" / "module-11-completion-task.html",
+        SITE / "practice" / "module-12-completion-task.html",
+    ]
+    if sum("../reference/" in page.read_text(encoding="utf-8") for page in contextual_pages if page.exists()) < 8:
+        failures.append("contextual reference tools are not linked at the intended points of use")
+
+    first_lessons = [SITE / "modules" / f"module-{number:02d}" / f"lesson-{[1,4,7,10,13,16,19,18,20,22,30,32][number-1]:02d}.html" for number in range(1, 13)]
+    for module_num, page in enumerate(first_lessons, start=1):
+        if not page.exists():
+            continue
+        text = page.read_text(encoding="utf-8")
+        expected = "../../start.html" if module_num == 1 else f"../../assessments/module-{module_num - 1:02d}-readiness-check.html"
+        if expected not in text:
+            failures.append(f"first lesson backward navigation is not aligned for Module {module_num}")
+
+    for module_num in range(1, 13):
+        task_text = (SITE / "practice" / f"module-{module_num:02d}-completion-task.html").read_text(encoding="utf-8")
+        check_text = (SITE / "assessments" / f"module-{module_num:02d}-readiness-check.html").read_text(encoding="utf-8")
+        if "← Previous:" not in task_text:
+            failures.append(f"Module {module_num} task lacks a direct previous-lesson link")
+        if f"../practice/module-{module_num:02d}-completion-task.html" not in check_text:
+            failures.append(f"Module {module_num} readiness check lacks a direct previous-task link")
 
     progress_page = SITE / "progress.html"
     if progress_page.exists() and 'id="next-recommended-step"' not in progress_page.read_text(encoding="utf-8"):

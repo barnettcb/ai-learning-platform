@@ -26,3 +26,6 @@ A successful design:
 2. Pause for organizer corrections.
 3. Propose two practical newsletter operating models, including workload and ownership.
 4. After a model is selected, prepare a concise recommendation for the association board in a neutral, direct format.
+
+
+> **Use this tool:** [Core Prompt Pattern](../reference/core-prompt-pattern.html) while adding audience, format, stages, and visible uncertainty.

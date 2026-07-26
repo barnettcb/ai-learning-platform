@@ -1,7 +1,9 @@
 # Module 7 Completion Task — Build a Traceable Information Brief
 
 ## Scenario
-A neighborhood association is reviewing three supplied items about a proposed community improvement: a written proposal, a cost table, and a site photograph.
+A neighborhood association is reviewing three supplied items about a proposed community improvement: a written proposal, a cost table, and an annotated site image.
+
+[Open the fictional source packet](module-07-source-packet.html) before completing the worksheet. Use only that packet unless the instructions explicitly ask for outside information.
 
 ## Instructions
 Create a concise information brief that:

@@ -1,7 +1,7 @@
 # Module 4 — Shape the Response
 
 ## Module promise
-By the end of this module, learners can direct how an answer should be presented, divide complex work into manageable stages, and require important assumptions or uncertainties to remain visible.
+By the end of this module, you can direct how an answer should be presented, divide complex work into manageable stages, and require important assumptions or uncertainties to remain visible.
 
 ## Prerequisites
 Module 3.
@@ -14,5 +14,5 @@ Module 3.
 ## Completion task
 Design a multi-stage request that identifies the intended reader, requests a usable response format, divides the work appropriately, and makes uncertain reasoning visible.
 
-## Deliberate exclusions
-This module does not teach examples, conversational repair, source verification, or reusable workflow design. Those concepts have separate canonical homes.
+## Scope
+This module shapes presentation and process. Examples and conversational repair are introduced in Module 5.

@@ -3,35 +3,22 @@
 - Home
 - Start Here
   - How the program works
-  - Initial self-assessment
+  - Initial self-assessment with saved feedback
   - Learning path
-- Learn
-  - Part I: Understand the Tool
-  - Part II: Communicate Clearly
-  - Part III: Apply the Skill
-  - Part IV: Build Reliable Workflows
+  - Begin Module 1
+- Modules 1–12
+  - Complete orientation on each module landing page
+  - Three lessons
+  - Applied task
+  - Readiness check
 - Practice
-  - Guided practices
-  - Prompt clinics
-  - Challenge labs
+  - Twelve applied tasks
+  - Twelve readiness checks
+  - Module 7 fictional source packet
   - Capstone
-- Library
-  - Prompt patterns
-  - Templates
-  - Checklists
-  - Decision guides
-  - Worked examples
-  - Glossary
-- Topics
-  - Research
-  - Writing
-  - Planning
-  - Finance
-  - Medical information
-  - Education
-  - Everyday life
-  - Files
-  - Images
-  - Web research
-- Progress
-- About the methodology
+- Learning Outcomes
+- Reference Library
+- Search
+- My Progress
+- My Workspace
+- Course Completion

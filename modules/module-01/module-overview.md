@@ -1,7 +1,7 @@
-# Module 1 — What AI Is Good At
+# Module 1 — Understand What AI Can Do
 
 ## Module promise
-By the end of this module, learners can describe what conversational AI does well, recognize its basic limitations, and avoid mistaking confident language for dependable evidence.
+By the end of this module, you can explain what conversational AI does well, recognize its basic limitations, and avoid mistaking confident language for dependable evidence.
 
 ## Prerequisites
 Basic ability to open and use a conversational AI tool.
@@ -12,12 +12,7 @@ Basic ability to open and use a conversational AI tool.
 3. Why confident answers can still be wrong
 
 ## Completion task
-Review eight everyday tasks. For each task, decide whether AI is:
-- Well suited
-- Useful with human review
-- Poorly suited
+Review four everyday tasks. For each task, identify what AI is doing, the main limitation or risk, and the human responsibility that remains.
 
-Then identify the main risk and the human responsibility that remains.
-
-## Deliberate exclusions
-This module does not teach prompt structure, verification procedures, privacy rules, or model architecture. Those concepts have separate canonical homes.
+## Scope
+This module focuses on system behavior and limits. Module 2 turns those limits into a deliberate-use decision process, including privacy and approved-use choices.

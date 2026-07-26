@@ -1,10 +1,10 @@
 # Module 6 — Research Reliably
 
 ## Module promise
-By the end of this module, learners can use AI to plan and synthesize research, verify important claims using appropriate sources, and use web-connected AI without confusing retrieval with proof.
+By the end of this module, you can use AI to plan and synthesize research, verify important claims using appropriate sources, and use web-connected AI without confusing retrieval with proof.
 
 ## Prerequisites
-Modules 1–5, especially Lessons 3, 5, and 12.
+Modules 1–5, especially the lessons on confident errors, approved use, and visible uncertainty.
 
 ## Lessons
 1. Research and information gathering
@@ -14,5 +14,5 @@ Modules 1–5, especially Lessons 3, 5, and 12.
 ## Completion task
 Produce a short research brief whose scope, evidence, uncertainties, and verification steps remain visible.
 
-## Deliberate exclusions
-This module does not teach academic research methodology in full, professional due diligence, domain-specific financial or medical analysis, or uploaded-file workflows.
+## Scope
+This module teaches a practical research-and-verification workflow, not full academic methodology or professional due diligence.
