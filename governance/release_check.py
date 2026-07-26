@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -15,7 +16,28 @@ def run(*args: str) -> None:
     subprocess.run(args, cwd=ROOT, check=True)
 
 
+def verify_release_documentation() -> None:
+    audit_numbers = []
+    for path in (ROOT / "governance").glob("release-audit-pass-*.md"):
+        match = re.search(r"pass-(\d+)$", path.stem)
+        if match:
+            audit_numbers.append(int(match.group(1)))
+    if not audit_numbers:
+        raise RuntimeError("No numbered release-audit document found")
+
+    latest = max(audit_numbers)
+    current_path = ROOT / "governance" / "current-release.md"
+    first_line = current_path.read_text(encoding="utf-8").splitlines()[0]
+    if f"Pass {latest}" not in first_line:
+        raise RuntimeError(
+            f"Current release documentation is stale: latest audit is Pass {latest}, "
+            f"but current-release.md begins with {first_line!r}"
+        )
+    print(f"RELEASE DOCUMENTATION PASSED: current-release.md matches Pass {latest}")
+
+
 def main() -> None:
+    verify_release_documentation()
     run(sys.executable, "governance/content-audit.py")
     run(sys.executable, "governance/generated-consistency.py")
     run(sys.executable, "site/build_site.py")

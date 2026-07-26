@@ -39,13 +39,13 @@ A content object may be released only after all applicable checks pass.
 
 ## Visual polish checks
 - Typography establishes a clear title, section, body, label, and helper-text hierarchy.
-- Metadata labels sit next to the page title and remain readable without overpowering it.
+- Metadata labels sit next to the page title, use at least 0.82rem text and 30-pixel chip height, and remain readable without overpowering it.
 - Primary and secondary actions use consistent size, radius, color, and hover/focus behavior.
 - Form labels remain adjacent to their controls; selected answers and validation states are visually unambiguous.
 - Text and control colors meet WCAG AA contrast targets on their intended surfaces.
 - Cards, borders, shadows, and tinted panels communicate hierarchy rather than decorate every section equally.
 - Desktop and narrow-screen layouts have no horizontal overflow, clipped controls, or stranded labels.
-- Touch targets for primary interactive controls are at least 44 pixels high.
+- Touch targets for all persistent global controls and primary interactive controls are at least 44 pixels high.
 - Reduced-motion, keyboard-focus, and print behavior remain intact.
 
 ## Final simplification pass

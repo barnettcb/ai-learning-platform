@@ -33,6 +33,18 @@ class LinkParser(HTMLParser):
             self.h1_count += 1
 
 
+def css_rule(css: str, selector: str) -> str | None:
+    match = re.search(rf"(?m)^{re.escape(selector)}\s*\{{(.*?)^\}}", css, flags=re.S)
+    return match.group(1) if match else None
+
+
+def css_property(rule: str | None, name: str) -> str | None:
+    if rule is None:
+        return None
+    match = re.search(rf"(?:^|;)\s*{re.escape(name)}\s*:\s*([^;]+)", rule)
+    return match.group(1).strip() if match else None
+
+
 def audit() -> list[str]:
     failures: list[str] = []
     html_files = sorted(SITE.rglob("*.html"))
@@ -57,6 +69,20 @@ def audit() -> list[str]:
     for path in required:
         if not path.exists():
             failures.append(f"missing required generated asset: {path.relative_to(ROOT)}")
+
+    css_path = SITE / "assets" / "site.css"
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8")
+        for selector in (".search-link", "#nav-toggle", ".bookmark-button", ".progress-actions button"):
+            value = css_property(css_rule(css, selector), "min-height")
+            if value != "44px":
+                failures.append(f"global control {selector} must use a 44px minimum height, found {value!r}")
+        meta_font = css_property(css_rule(css, ".page-meta"), "font-size")
+        if meta_font != ".82rem":
+            failures.append(f"page metadata must use .82rem text, found {meta_font!r}")
+        meta_height = css_property(css_rule(css, ".page-meta span:not(:nth-child(2))"), "min-height")
+        if meta_height != "30px":
+            failures.append(f"page metadata chips must use a 30px minimum height, found {meta_height!r}")
 
     for path in html_files:
         parser = LinkParser()
