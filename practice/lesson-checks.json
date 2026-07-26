@@ -1,0 +1,434 @@
+[
+  {
+    "lesson": 1,
+    "prompt": "Which use keeps the right human role?",
+    "options": [
+      "Ask AI to draft a complaint, then verify facts and send it yourself",
+      "Let AI decide whether chest pain is an emergency",
+      "Use AI as the final tax authority",
+      "Accept a polished answer without review"
+    ],
+    "answer": 0,
+    "explanation": "AI can assist with drafting, while the person remains responsible for facts, judgment, and action."
+  },
+  {
+    "lesson": 2,
+    "prompt": "Why can two answers to the same question differ?",
+    "options": [
+      "AI always searches the same database",
+      "AI remembers every prior conversation perfectly",
+      "AI chooses randomly without using the prompt",
+      "AI predicts language from context rather than retrieving one fixed response"
+    ],
+    "answer": 3,
+    "explanation": "Conversational AI generates responses from patterns and context, so wording and supplied information can change the result."
+  },
+  {
+    "lesson": 3,
+    "prompt": "What is the safest response to a confident factual claim?",
+    "options": [
+      "Repeat the question until the same answer appears",
+      "Use longer wording as proof",
+      "Verify it when accuracy matters",
+      "Assume confidence means certainty"
+    ],
+    "answer": 2,
+    "explanation": "Fluent language is not evidence. Important claims still need verification."
+  },
+  {
+    "lesson": 4,
+    "prompt": "Which task is a strong ordinary use of AI?",
+    "options": [
+      "Diagnose a new symptom",
+      "Generate several agenda options for a meeting",
+      "Make a final hiring decision",
+      "Confirm an unverified legal deadline"
+    ],
+    "answer": 1,
+    "explanation": "Idea generation is low-risk and easy for a human to review."
+  },
+  {
+    "lesson": 5,
+    "prompt": "When should AI usually not be the final decision-maker?",
+    "options": [
+      "When the decision materially affects another person",
+      "When brainstorming fictional names",
+      "When shortening supplied text",
+      "When organizing a packing list"
+    ],
+    "answer": 0,
+    "explanation": "Consequential judgments require accountable human control."
+  },
+  {
+    "lesson": 6,
+    "prompt": "What should happen before sharing sensitive material?",
+    "options": [
+      "Upload everything and ask AI to redact it",
+      "Rely only on a confidentiality request in the prompt",
+      "Assume a personal account is approved for all data",
+      "Remove unnecessary identifying details"
+    ],
+    "answer": 3,
+    "explanation": "Privacy protection starts before information is shared."
+  },
+  {
+    "lesson": 7,
+    "prompt": "Which request defines the result most clearly?",
+    "options": [
+      "Tell me about communication",
+      "Make something professional",
+      "Create a one-page briefing for supervisors with three action steps",
+      "Help me with this"
+    ],
+    "answer": 2,
+    "explanation": "A clear deliverable, audience, and ending make the assignment actionable."
+  },
+  {
+    "lesson": 8,
+    "prompt": "Which context is most useful?",
+    "options": [
+      "No context so the model stays creative",
+      "Facts that materially affect the requested result",
+      "Every detail you can remember",
+      "Only your preferred conclusion"
+    ],
+    "answer": 1,
+    "explanation": "Relevant context improves the answer without burying the task."
+  },
+  {
+    "lesson": 9,
+    "prompt": "Which is a useful boundary?",
+    "options": [
+      "Use only the supplied facts and flag missing information",
+      "Be accurate",
+      "Do your best",
+      "Make it perfect"
+    ],
+    "answer": 0,
+    "explanation": "Specific constraints tell the system what it may and may not do."
+  },
+  {
+    "lesson": 10,
+    "prompt": "Which instruction best shapes presentation?",
+    "options": [
+      "Make it look good",
+      "Use your judgment",
+      "Give me lots of detail",
+      "Return a five-row table with columns for option, benefit, risk, cost, and next step"
+    ],
+    "answer": 3,
+    "explanation": "A defined format makes the output easier to use and review."
+  },
+  {
+    "lesson": 11,
+    "prompt": "When is staging most valuable?",
+    "options": [
+      "Whenever a prompt can be longer",
+      "Only after the first answer fails",
+      "When an early decision should be reviewed before later work depends on it",
+      "When the task is trivial"
+    ],
+    "answer": 2,
+    "explanation": "Stages create deliberate checkpoints and prevent compounding a weak direction."
+  },
+  {
+    "lesson": 12,
+    "prompt": "How should uncertainty appear in a useful answer?",
+    "options": [
+      "Treat all possibilities as equally likely",
+      "Label assumptions, missing facts, and confidence limits",
+      "Hide it so the answer sounds decisive",
+      "Replace it with more detail"
+    ],
+    "answer": 1,
+    "explanation": "Visible uncertainty helps the user decide what requires checking."
+  },
+  {
+    "lesson": 13,
+    "prompt": "Why provide an example?",
+    "options": [
+      "To demonstrate the desired pattern or standard",
+      "To force exact copying",
+      "To replace the assignment",
+      "To guarantee factual accuracy"
+    ],
+    "answer": 0,
+    "explanation": "Examples clarify expectations, but the task and constraints still matter."
+  },
+  {
+    "lesson": 14,
+    "prompt": "When should you continue the same conversation?",
+    "options": [
+      "Whenever any new topic arises",
+      "Only when the first answer was perfect",
+      "Never, because context cannot help",
+      "When the prior context remains useful and you are refining the same task"
+    ],
+    "answer": 3,
+    "explanation": "Continuing is useful when prior decisions and material still apply."
+  },
+  {
+    "lesson": 15,
+    "prompt": "What is the best repair instruction?",
+    "options": [
+      "Try harder",
+      "Add more words",
+      "Keep the useful structure, fix the named weaknesses, and return a revised version",
+      "Start over and make it better"
+    ],
+    "answer": 2,
+    "explanation": "Focused repair preserves good work and directs attention to specific problems."
+  },
+  {
+    "lesson": 16,
+    "prompt": "What is the best first step in AI-assisted research?",
+    "options": [
+      "Treat a summary as a source",
+      "Define the question and evidence needed",
+      "Ask for a long answer immediately",
+      "Collect only sources that support your view"
+    ],
+    "answer": 1,
+    "explanation": "Research quality starts with a clear question and evidence standard."
+  },
+  {
+    "lesson": 17,
+    "prompt": "Which verification step is strongest?",
+    "options": [
+      "Check the claim against an authoritative source appropriate to the topic",
+      "Ask AI whether it is sure",
+      "Count how many times the claim is repeated",
+      "Prefer the most detailed answer"
+    ],
+    "answer": 0,
+    "explanation": "Verification requires evidence outside the original generated answer."
+  },
+  {
+    "lesson": 18,
+    "prompt": "What changes when AI can search the web?",
+    "options": [
+      "Every result becomes automatically reliable",
+      "The model no longer makes mistakes",
+      "Sources are unnecessary because links appear",
+      "Current claims still require source evaluation and date checking"
+    ],
+    "answer": 3,
+    "explanation": "Search access improves currency, not automatic trustworthiness."
+  },
+  {
+    "lesson": 19,
+    "prompt": "How do you preserve fidelity when summarizing?",
+    "options": [
+      "Remove qualifications for brevity",
+      "Merge conflicting claims into one conclusion",
+      "Separate source content from your interpretation",
+      "Add likely details to make the summary complete"
+    ],
+    "answer": 2,
+    "explanation": "A faithful summary preserves the source\u2019s meaning, limits, and uncertainty."
+  },
+  {
+    "lesson": 20,
+    "prompt": "What is safest with an uploaded file?",
+    "options": [
+      "Treat the generated answer as a replacement for the original",
+      "State the exact task and verify the extracted result against the file",
+      "Assume every table and image was read correctly",
+      "Upload unrelated files for context"
+    ],
+    "answer": 1,
+    "explanation": "Files can be misread; targeted instructions and source checking remain important."
+  },
+  {
+    "lesson": 21,
+    "prompt": "What is an appropriate image workflow?",
+    "options": [
+      "Describe what is visible, note uncertainty, and avoid unsupported identification",
+      "Infer hidden facts from appearance",
+      "Treat image quality as irrelevant",
+      "Use the image as proof of context not shown"
+    ],
+    "answer": 0,
+    "explanation": "Image interpretation should remain grounded in visible evidence."
+  },
+  {
+    "lesson": 22,
+    "prompt": "How should AI support writing?",
+    "options": [
+      "Publish the first draft unchanged",
+      "Let tone override accuracy",
+      "Ask it to imitate a living author exactly",
+      "Use it to draft or revise while you retain authorship and factual responsibility"
+    ],
+    "answer": 3,
+    "explanation": "AI can accelerate writing, but the user remains responsible for the final work."
+  },
+  {
+    "lesson": 23,
+    "prompt": "Which learning use is strongest?",
+    "options": [
+      "Use AI to avoid difficult material",
+      "Treat fluency as mastery",
+      "Ask for an explanation, attempt the problem, then compare reasoning",
+      "Copy the answer without attempting it"
+    ],
+    "answer": 2,
+    "explanation": "Learning improves when the learner actively retrieves, applies, and checks understanding."
+  },
+  {
+    "lesson": 24,
+    "prompt": "What is a sound everyday-use pattern?",
+    "options": [
+      "Assume recommendations fit everyone",
+      "Use AI for options, then verify current details before acting",
+      "Treat an itinerary as a reservation",
+      "Share unnecessary personal details"
+    ],
+    "answer": 1,
+    "explanation": "AI can organize possibilities, while real-world details still need confirmation."
+  },
+  {
+    "lesson": 25,
+    "prompt": "What makes an AI-assisted plan useful?",
+    "options": [
+      "Clear outcomes, owners, dependencies, dates, and review points",
+      "More tasks than the team can complete",
+      "No assumptions or risks",
+      "A single unchangeable sequence"
+    ],
+    "answer": 0,
+    "explanation": "A practical plan makes responsibility and uncertainty visible."
+  },
+  {
+    "lesson": 26,
+    "prompt": "How should AI support a decision?",
+    "options": [
+      "Choose the final answer based on confidence",
+      "Hide value judgments inside a score",
+      "Use only the easiest factor to measure",
+      "Structure criteria and tradeoffs without replacing the accountable decision-maker"
+    ],
+    "answer": 3,
+    "explanation": "AI can clarify a choice, but values and accountability remain human."
+  },
+  {
+    "lesson": 27,
+    "prompt": "How should you choose an AI approach?",
+    "options": [
+      "Always begin with web search",
+      "Use one fixed prompt for all work",
+      "Match the tool and workflow to the task, risk, and evidence needs",
+      "Use the most advanced feature every time"
+    ],
+    "answer": 2,
+    "explanation": "The simplest approach that meets the task and risk requirements is usually best."
+  },
+  {
+    "lesson": 28,
+    "prompt": "What is a safe financial-learning use?",
+    "options": [
+      "Let AI choose investments without review",
+      "Model scenarios using explicit assumptions, then verify rules and inputs",
+      "Treat projections as guarantees",
+      "Share full account identifiers unnecessarily"
+    ],
+    "answer": 1,
+    "explanation": "Scenario analysis can support learning, but assumptions, rules, and decisions require verification."
+  },
+  {
+    "lesson": 29,
+    "prompt": "What is a safe medical-information use?",
+    "options": [
+      "Organize symptoms and questions for a clinician while following urgent-care guidance when needed",
+      "Use AI to rule out an emergency",
+      "Change medication based only on a chat",
+      "Assume a plausible diagnosis is confirmed"
+    ],
+    "answer": 0,
+    "explanation": "AI can help prepare and understand information, not replace examination or urgent care."
+  },
+  {
+    "lesson": 30,
+    "prompt": "Who remains accountable for consequential AI-assisted work?",
+    "options": [
+      "The language model",
+      "The prompt template",
+      "No one if AI was involved",
+      "The person or organization making and using the decision"
+    ],
+    "answer": 3,
+    "explanation": "Using AI does not transfer responsibility away from the human decision-maker."
+  },
+  {
+    "lesson": 31,
+    "prompt": "What makes a reusable prompt useful?",
+    "options": [
+      "Making it as long as possible",
+      "Removing human review",
+      "A stable core with fields that can change for the task",
+      "Freezing every detail permanently"
+    ],
+    "answer": 2,
+    "explanation": "Reusable prompts should preserve proven structure without becoming rigid."
+  },
+  {
+    "lesson": 32,
+    "prompt": "When is a checklist better than a long prompt?",
+    "options": [
+      "When the task will never repeat",
+      "When the same review steps must be performed consistently",
+      "When creativity is the only goal",
+      "When no one knows the desired result"
+    ],
+    "answer": 1,
+    "explanation": "Checklists support reliable execution and review of repeatable work."
+  },
+  {
+    "lesson": 33,
+    "prompt": "What should systematic review include?",
+    "options": [
+      "Accuracy, completeness, fit, risk, and usability",
+      "Grammar only",
+      "Whether the answer sounds confident",
+      "Whether it agrees with your first impression"
+    ],
+    "answer": 0,
+    "explanation": "A useful review covers both correctness and fitness for the real task."
+  },
+  {
+    "lesson": 34,
+    "prompt": "What protects a long-running project?",
+    "options": [
+      "Relying on conversational memory alone",
+      "Keeping every abandoned idea active",
+      "Starting a new project for each revision",
+      "Explicit decisions, current state, next steps, and periodic cleanup"
+    ],
+    "answer": 3,
+    "explanation": "Durable project state must be recorded outside transient conversation context."
+  },
+  {
+    "lesson": 35,
+    "prompt": "What belongs in a project handoff?",
+    "options": [
+      "Every message copied without structure",
+      "A vague request to continue",
+      "Goal, decisions, current state, unresolved issues, and next action",
+      "Only the latest output"
+    ],
+    "answer": 2,
+    "explanation": "A handoff should let another session resume accurately without reconstructing the project."
+  },
+  {
+    "lesson": 36,
+    "prompt": "What makes a personal AI workflow durable?",
+    "options": [
+      "Delegating final judgment to AI",
+      "A simple repeatable sequence with clear review and verification points",
+      "Using every available feature",
+      "Avoiding changes after the first version"
+    ],
+    "answer": 1,
+    "explanation": "A durable workflow is simple, adaptable, and explicit about human control."
+  }
+]

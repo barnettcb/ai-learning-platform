@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#176571">
+<title>Page not found | Practical AI Learning</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f4f6f5; color: #182126; font: 16px/1.6 system-ui, sans-serif; }
+  main { width: min(620px, 100%); padding: clamp(28px, 7vw, 56px); border: 1px solid #d9e0df; border-radius: 18px; background: #fff; box-shadow: 0 18px 50px rgba(22, 42, 48, .08); }
+  h1 { margin: 0 0 .5rem; line-height: 1.15; font-size: clamp(2rem, 8vw, 3.4rem); }
+  p { max-width: 55ch; }
+  a { display: inline-block; margin-top: .6rem; padding: 11px 16px; border-radius: 9px; background: #176571; color: #fff; font-weight: 700; text-decoration: none; }
+  a:focus-visible { outline: 3px solid rgba(23, 101, 113, .3); outline-offset: 3px; }
+  .skip-link { position: fixed; left: 16px; top: 10px; transform: translateY(-160%); }
+  .skip-link:focus { transform: translateY(0); }
+  .site-footer { margin-top: 1.4rem; color: #5f6d74; font-size: .88rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
+  <p><strong>Practical AI Learning</strong></p>
+  <h1>Page not found</h1>
+  <p>The address may have changed, or the page may no longer exist. Return to the course home page and continue from there.</p>
+  <a id="home-link" href="./">Return to course home</a>
+  <footer class="site-footer"><p>Practical AI Learning</p></footer>
+</main>
+<script>
+(function () {
+  var isGitHubPages = window.location.hostname.endsWith('.github.io');
+  var segments = window.location.pathname.split('/').filter(Boolean);
+  var rootPath = isGitHubPages && segments.length ? '/' + segments[0] + '/' : '/';
+  document.getElementById('home-link').href = window.location.origin + rootPath;
+}());
+</script>
+</body>
+</html>

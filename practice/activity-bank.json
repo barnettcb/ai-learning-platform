@@ -1,0 +1,636 @@
+[
+  {
+    "module": 1,
+    "title": "Interactive task worksheet",
+    "intro": "Classify four scenarios, then identify the main risk and the human responsibility.",
+    "repeat": {
+      "items": [
+        "Generate possible themes for a neighborhood event.",
+        "Decide whether chest pain is caused by anxiety.",
+        "Rewrite a long email so it is easier to understand.",
+        "Confirm the filing deadline for a current government program."
+      ],
+      "fields": [
+        {
+          "key": "classification",
+          "label": "Classification",
+          "type": "select",
+          "options": [
+            "Choose one",
+            "Well suited",
+            "Useful with human review",
+            "Poorly suited"
+          ],
+          "required": true
+        },
+        {
+          "key": "risk",
+          "label": "Main risk",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "responsibility",
+          "label": "Human responsibility",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    "challenge": {
+      "prompt": "Which task is the strongest fit for AI with ordinary human review?",
+      "options": [
+        "Diagnose new chest pain",
+        "Rewrite a long internal email for clarity",
+        "Decide who should be fired",
+        "Confirm a current legal filing deadline without checking a source"
+      ],
+      "answer": 1,
+      "explanation": "Rewriting supplied text is a strong drafting task. Medical diagnosis, employment decisions, and current legal deadlines require stronger human control or authoritative sources."
+    }
+  },
+  {
+    "module": 2,
+    "title": "Interactive task worksheet",
+    "intro": "Choose the safest action for four scenarios, explain why, and identify the next step.",
+    "repeat": {
+      "items": [
+        "Create five names for a fictional character.",
+        "Review a confidential employee investigation file in a personal AI account.",
+        "Prepare questions for a doctor using a short, de-identified symptom summary.",
+        "Compare vacation ideas using general preferences and a budget range."
+      ],
+      "fields": [
+        {
+          "key": "action",
+          "label": "Action",
+          "type": "select",
+          "options": [
+            "Choose one",
+            "Use AI normally",
+            "Use AI with safeguards",
+            "Use another source first",
+            "Do not use AI for this task"
+          ],
+          "required": true
+        },
+        {
+          "key": "reason",
+          "label": "Why this action fits",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "next",
+          "label": "Safest next step",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    "challenge": {
+      "prompt": "A document contains names, account numbers, and medical details. What should happen first?",
+      "options": [
+        "Upload it and ask AI to remove the sensitive details",
+        "Minimize or de-identify the information before sharing anything",
+        "Use a longer prompt explaining that the file is confidential",
+        "Share it only after asking AI not to retain it"
+      ],
+      "answer": 1,
+      "explanation": "Privacy protection starts before information is shared. Remove or replace unnecessary identifying details and use an approved environment when sensitive information is genuinely required."
+    }
+  },
+  {
+    "module": 3,
+    "title": "Build your task brief",
+    "intro": "Draft each component, then combine it into one concise assignment.",
+    "fields": [
+      {
+        "key": "result",
+        "label": "Result needed",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "context",
+        "label": "Relevant context",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "constraints",
+        "label": "Required constraints",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "preferences",
+        "label": "Preferences",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "brief",
+        "label": "Final task brief",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      }
+    ],
+    "challenge": {
+      "prompt": "Which instruction gives AI the clearest assignment?",
+      "options": [
+        "Help me with a presentation",
+        "Create a five-slide briefing for supervisors that explains the new process, uses plain language, and ends with three implementation steps",
+        "Tell me everything about project communication",
+        "Make this better"
+      ],
+      "answer": 1,
+      "explanation": "The strongest assignment defines the deliverable, audience, purpose, constraints, and desired ending."
+    }
+  },
+  {
+    "module": 4,
+    "title": "Design the staged request",
+    "intro": "Create the request in stages and make the human review point explicit.",
+    "fields": [
+      {
+        "key": "audience",
+        "label": "Audience and purpose",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "stage1",
+        "label": "Stage 1: discovery",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "checkpoint",
+        "label": "Human review checkpoint",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "stage2",
+        "label": "Stage 2: planning",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "final",
+        "label": "Final recommendation request",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      }
+    ],
+    "challenge": {
+      "prompt": "When is a staged request most useful?",
+      "options": [
+        "When the task is trivial and the answer is obvious",
+        "When discovery or planning should be reviewed before the final output is produced",
+        "Whenever the prompt can be made longer",
+        "Only when AI refuses the first request"
+      ],
+      "answer": 1,
+      "explanation": "Staging creates deliberate review points before later work depends on an uncertain direction."
+    }
+  },
+  {
+    "module": 5,
+    "title": "Write the repair instruction",
+    "intro": "Diagnose the weak draft and request a focused revision without restarting useful work.",
+    "fields": [
+      {
+        "key": "keep",
+        "label": "What should remain",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "weaknesses",
+        "label": "Specific weaknesses",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "audience",
+        "label": "Audience and tone correction",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "safety",
+        "label": "Missing uncertainty or escalation instruction",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "revision",
+        "label": "Focused revision request",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      }
+    ],
+    "challenge": {
+      "prompt": "A draft has one weak section but the rest is useful. What is the best next move?",
+      "options": [
+        "Start a new conversation and discard the draft",
+        "Ask for a focused revision that preserves the useful parts",
+        "Accept the entire draft to avoid inconsistency",
+        "Request three completely unrelated replacements"
+      ],
+      "answer": 1,
+      "explanation": "Focused repair preserves good work while clearly identifying what must change and why."
+    }
+  },
+  {
+    "module": 6,
+    "title": "Plan the verified research brief",
+    "intro": "Define the evidence and verification plan before writing conclusions.",
+    "fields": [
+      {
+        "key": "question",
+        "label": "Focused research question and scope",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "evidence",
+        "label": "Evidence categories and preferred sources",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "verification",
+        "label": "Claims requiring direct verification",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "conflicts",
+        "label": "Conflicts, uncertainty, or missing information",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "findings",
+        "label": "Concise findings and open questions",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      }
+    ],
+    "challenge": {
+      "prompt": "Which claim most clearly requires direct source verification?",
+      "options": [
+        "A brainstorming suggestion",
+        "A current eligibility deadline for a government program",
+        "A proposed outline heading",
+        "A tone preference"
+      ],
+      "answer": 1,
+      "explanation": "Current deadlines can change and have real consequences, so they should be checked against an authoritative current source."
+    }
+  },
+  {
+    "module": 7,
+    "title": "Build the traceable information brief",
+    "intro": "Record source limits, extracted facts, traceable locations, and unresolved issues.",
+    "fields": [
+      {
+        "key": "sources",
+        "label": "Source inventory and limitations",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "facts",
+        "label": "Decision-relevant extracted facts",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "citations",
+        "label": "Page, section, table, or image references",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "gaps",
+        "label": "Contradictions, gaps, or unreadable details",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "brief",
+        "label": "Reader-ready summary",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      }
+    ],
+    "challenge": {
+      "prompt": "What makes an AI-assisted information brief traceable?",
+      "options": [
+        "It sounds confident",
+        "It includes exact page, section, table, or image references for important facts",
+        "It is longer than the source",
+        "It removes all uncertainty"
+      ],
+      "answer": 1,
+      "explanation": "Traceability lets the reader return to the source location and verify the claim."
+    }
+  },
+  {
+    "module": 8,
+    "title": "Complete the writing and learning workflow",
+    "intro": "Use one section for writing assistance and one for active learning design.",
+    "fields": [
+      {
+        "key": "writing-purpose",
+        "label": "Writing purpose, reader, and fixed facts",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "writing-role",
+        "label": "AI role and revised text",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      },
+      {
+        "key": "writing-review",
+        "label": "Human review findings",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "learning-target",
+        "label": "Learning target and starting level",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "learning-practice",
+        "label": "Active practice and feedback plan",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "performance-check",
+        "label": "Final performance check",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "challenge": {
+      "prompt": "Which learning activity best tests understanding?",
+      "options": [
+        "Reread the explanation",
+        "Copy the definition",
+        "Explain the idea in your own words and apply it to a new case",
+        "Highlight every sentence"
+      ],
+      "answer": 2,
+      "explanation": "Retrieval and transfer reveal whether the learner can use the idea, not merely recognize it."
+    }
+  },
+  {
+    "module": 9,
+    "title": "Plan and compare the approaches",
+    "intro": "Document the AI approach, project plan, and option comparison separately.",
+    "fields": [
+      {
+        "key": "approach",
+        "label": "Approach statement",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "plan",
+        "label": "Project plan, dependencies, owners, and risks",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      },
+      {
+        "key": "criteria",
+        "label": "Comparison criteria and priorities",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "tradeoffs",
+        "label": "Facts, assumptions, and tradeoffs",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "recommendation",
+        "label": "Conditional or justified recommendation",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "challenge": {
+      "prompt": "What should remain human-owned in an AI-assisted decision?",
+      "options": [
+        "The formatting only",
+        "The final judgment, priorities, and acceptance of consequences",
+        "The first list of options only",
+        "Nothing once enough data is supplied"
+      ],
+      "answer": 1,
+      "explanation": "AI can structure options and surface tradeoffs, but the accountable person must own the judgment and consequences."
+    }
+  },
+  {
+    "module": 10,
+    "title": "Build the high-stakes workflow",
+    "intro": "Keep AI in a limited role and define the professional and human safeguards.",
+    "fields": [
+      {
+        "key": "domain",
+        "label": "Domain",
+        "type": "select",
+        "options": [
+          "Choose one",
+          "Health",
+          "Legal",
+          "Financial",
+          "Employment",
+          "Safety"
+        ],
+        "required": true
+      },
+      {
+        "key": "purpose",
+        "label": "Question and practical purpose",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "role",
+        "label": "Limited AI role",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "privacy",
+        "label": "Minimum information and privacy protections",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "evidence",
+        "label": "Evidence, verification, assumptions, and uncertainty",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "professional",
+        "label": "Questions for the appropriate professional",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "checks",
+        "label": "Decision owner and checks required before action",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "challenge": {
+      "prompt": "Which response is safest in a high-stakes domain?",
+      "options": [
+        "Give a definitive answer whenever the user sounds worried",
+        "State limits, identify what requires professional review, and direct urgent situations to appropriate help",
+        "Avoid all useful information",
+        "Replace uncertainty with the most likely answer"
+      ],
+      "answer": 1,
+      "explanation": "High-stakes support should preserve uncertainty, define limits, and escalate when professional or urgent help is appropriate."
+    }
+  },
+  {
+    "module": 11,
+    "title": "Create the reusable workflow",
+    "intro": "Turn one success into an adaptable process and test it against a varied case.",
+    "fields": [
+      {
+        "key": "task",
+        "label": "Recurring task",
+        "type": "text",
+        "required": true
+      },
+      {
+        "key": "prompt",
+        "label": "Reusable prompt framework",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      },
+      {
+        "key": "template",
+        "label": "Input or output template",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "checklist",
+        "label": "Review checklist",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "adaptation",
+        "label": "Adaptation notes and approval owner",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "test",
+        "label": "Test result and revision",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "challenge": {
+      "prompt": "What should be captured when turning a successful interaction into a reusable workflow?",
+      "options": [
+        "Only the final answer",
+        "Inputs, sequence, review points, quality checks, and expected output",
+        "Every word from the original conversation",
+        "Only the tool name"
+      ],
+      "answer": 1,
+      "explanation": "A reusable workflow preserves the process and quality controls, not just one successful result."
+    }
+  },
+  {
+    "module": 12,
+    "title": "Design the durable project workflow",
+    "intro": "Create a restartable project record with clear gates, ownership, and next action.",
+    "fields": [
+      {
+        "key": "objective",
+        "label": "Stable objective and current scope",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "stages",
+        "label": "Staged deliverables and review gates",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "record",
+        "label": "Source-of-truth project record",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "handoff",
+        "label": "Current-state handoff",
+        "type": "textarea",
+        "required": true,
+        "large": true
+      },
+      {
+        "key": "workflow",
+        "label": "Personal AI workflow and review levels",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "continuity",
+        "label": "Continuity-test result",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "next",
+        "label": "Next concrete action",
+        "type": "text",
+        "required": true
+      }
+    ],
+    "challenge": {
+      "prompt": "What is most important in a project handoff?",
+      "options": [
+        "A complete transcript with no prioritization",
+        "Current status, decisions, evidence, open issues, constraints, and the next action",
+        "A summary of only the earliest work",
+        "A promise that the next person can infer missing details"
+      ],
+      "answer": 1,
+      "explanation": "A good handoff allows continuation without reconstructing critical context or repeating settled decisions."
+    }
+  }
+]

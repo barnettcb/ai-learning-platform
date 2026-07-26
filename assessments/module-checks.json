@@ -1,0 +1,110 @@
+[
+  {
+    "module": 1,
+    "title": "Module 1 Readiness Check",
+    "intro": "Choose the response that best reflects a realistic understanding of conversational AI.",
+    "questions": [
+      {"prompt": "An AI answer sounds polished and confident. What should you conclude?", "options": ["It is probably accurate because fluent answers require understanding.", "It may still be wrong; fluency is not evidence of accuracy.", "It is safe to use unless the AI includes a warning."], "answer": 1, "explanation": "Conversational AI predicts useful language. A polished answer can still contain invented or mistaken claims."},
+      {"prompt": "Which assignment is the best fit for AI assistance?", "options": ["Make a final medical diagnosis from symptoms.", "Decide whether a legal contract is safe to sign without review.", "Generate several ways to organize notes before you choose and verify one."], "answer": 2, "explanation": "AI is strongest as an aid for drafting, organizing, and exploring when a person remains responsible for judgment."}
+    ]
+  },
+  {
+    "module": 2,
+    "title": "Module 2 Readiness Check",
+    "intro": "Apply the decision process for using AI deliberately.",
+    "questions": [
+      {"prompt": "You can complete a simple two-minute task correctly without AI. What is usually the best choice?", "options": ["Use AI anyway so the result looks more advanced.", "Do it directly unless AI adds a clear benefit.", "Ask AI to decide whether you should use AI."], "answer": 1, "explanation": "AI adds overhead and risk. Use it when the likely benefit exceeds the effort and consequences."},
+      {"prompt": "Before sharing work information with an AI tool, what should happen first?", "options": ["Remove or avoid sensitive information and check the applicable rules.", "Paste everything so the model has complete context.", "Ask the model to promise confidentiality."], "answer": 0, "explanation": "Privacy decisions must happen before disclosure. A model cannot create permission or erase organizational rules."}
+    ]
+  },
+  {
+    "module": 3,
+    "title": "Module 3 Readiness Check",
+    "intro": "Identify what makes an assignment clear enough for useful AI work.",
+    "questions": [
+      {"prompt": "Which instruction is most likely to produce a useful first draft?", "options": ["Write something good about this.", "Draft a 200-word update for customers explaining a two-day delay, using a calm tone and no technical jargon.", "Be creative and professional."], "answer": 1, "explanation": "A useful assignment states the task, audience, purpose, constraints, and desired output."},
+      {"prompt": "Important context is missing and guessing could change the result. What should you ask the AI to do?", "options": ["Fill the gaps with the most likely details.", "Ask focused clarification questions before drafting.", "Produce a longer answer to compensate."], "answer": 1, "explanation": "Clarification is safer than silent assumptions when missing information materially affects the work."}
+    ]
+  },
+  {
+    "module": 4,
+    "title": "Module 4 Readiness Check",
+    "intro": "Choose constraints and formats that make output easier to use.",
+    "questions": [
+      {"prompt": "You need to compare four vendors consistently. Which output request is strongest?", "options": ["Tell me which vendor is best.", "Write a detailed essay about the vendors.", "Use a table with price, lead time, warranty, evidence, and unresolved questions."], "answer": 2, "explanation": "A defined structure makes comparison easier and exposes missing information."},
+      {"prompt": "What is the main purpose of giving the AI a strong example?", "options": ["To provide evidence that every fact in the new answer is true.", "To demonstrate the desired pattern, tone, or level of detail.", "To eliminate the need to review the result."], "answer": 1, "explanation": "Examples communicate a target pattern. They do not verify new claims or remove the need for judgment."}
+    ]
+  },
+  {
+    "module": 5,
+    "title": "Module 5 Readiness Check",
+    "intro": "Use conversation to improve work efficiently.",
+    "questions": [
+      {"prompt": "A draft is close but too formal and twice as long as needed. What is the best next move?", "options": ["Start a completely new chat with the same original prompt.", "Give targeted feedback: shorten it by half and use a warmer, plainspoken tone.", "Accept it because revisions make AI less reliable."], "answer": 1, "explanation": "Specific feedback preserves useful work while correcting identifiable problems."},
+      {"prompt": "When should you restart rather than continue revising?", "options": ["Whenever the first draft is imperfect.", "When the conversation is anchored to wrong assumptions or has become confusing and inefficient.", "After every two messages."], "answer": 1, "explanation": "A fresh start is useful when accumulated context is actively harming the result."}
+    ]
+  },
+  {
+    "module": 6,
+    "title": "Module 6 Readiness Check",
+    "intro": "Evaluate research and current-information work.",
+    "questions": [
+      {"prompt": "An AI provides three links that appear to support a claim. What should you do next?", "options": ["Treat the number of links as sufficient verification.", "Open the sources and confirm they actually support the claim and are current enough.", "Ask the AI whether it is sure."], "answer": 1, "explanation": "Verification requires inspecting the underlying sources, not merely receiving citations."},
+      {"prompt": "Which source is generally strongest for a current software feature?", "options": ["The product's current official documentation.", "An undated forum comment.", "A generic AI summary with no source."], "answer": 0, "explanation": "For changing technical behavior, current primary documentation is usually the best starting point."}
+    ]
+  },
+  {
+    "module": 7,
+    "title": "Module 7 Readiness Check",
+    "intro": "Work carefully with files, data, and extracted information.",
+    "questions": [
+      {"prompt": "AI summarizes a spreadsheet but the totals seem surprising. What is the best response?", "options": ["Trust the narrative because summaries are easier than calculations.", "Check the source rows, formulas, filters, and assumptions before using the conclusion.", "Ask for a more confident summary."], "answer": 1, "explanation": "Data conclusions depend on correct inputs, definitions, and calculations. Trace surprising results back to the source."},
+      {"prompt": "A scanned document is difficult to read. What should you assume about extracted text?", "options": ["It may contain recognition errors and needs spot-checking against the image.", "Extraction is exact whenever the file opens successfully.", "Longer extracted text is necessarily more accurate."], "answer": 0, "explanation": "Poor scans and OCR can introduce subtle errors, especially in numbers, names, and tables."}
+    ]
+  },
+  {
+    "module": 8,
+    "title": "Module 8 Readiness Check",
+    "intro": "Use AI for writing and learning without surrendering authorship or understanding.",
+    "questions": [
+      {"prompt": "What is the most responsible way to use AI on a personal statement?", "options": ["Let AI invent experiences that fit the desired image.", "Provide your real ideas, use AI to improve structure and clarity, then rewrite and verify the final voice.", "Submit the first generated draft unchanged."], "answer": 1, "explanation": "AI can support expression, but the facts, meaning, and final authorship must remain yours."},
+      {"prompt": "Which learning request is likely to build understanding?", "options": ["Give me the answer only.", "Explain the idea, ask me to apply it, then critique my reasoning.", "Use more technical terms so the topic sounds rigorous."], "answer": 1, "explanation": "Active retrieval, application, and feedback produce stronger learning than passive answer collection."}
+    ]
+  },
+  {
+    "module": 9,
+    "title": "Module 9 Readiness Check",
+    "intro": "Use AI to support planning and decisions while retaining responsibility.",
+    "questions": [
+      {"prompt": "What is the best role for AI in an important decision?", "options": ["Make the decision so personal bias is removed.", "Generate options, criteria, tradeoffs, and questions for a person to evaluate.", "Select the option with the longest explanation."], "answer": 1, "explanation": "AI can widen and structure thinking, but it does not own the values, consequences, or final choice."},
+      {"prompt": "A plan looks complete but depends on uncertain dates. What should you request?", "options": ["Hide uncertainty to make the plan easier to follow.", "Label assumptions, dependencies, and contingency actions.", "Replace dates with motivational language."], "answer": 1, "explanation": "Good plans expose uncertainty and define what changes when assumptions fail."}
+    ]
+  },
+  {
+    "module": 10,
+    "title": "Module 10 Readiness Check",
+    "intro": "Recognize the safeguards required in high-stakes domains.",
+    "questions": [
+      {"prompt": "AI suggests that a symptom is probably harmless. What is the safest interpretation?", "options": ["Use the reassurance as a diagnosis.", "Treat it as general information only and seek appropriate professional care based on urgency and context.", "Ignore any symptom not listed as an emergency by the model."], "answer": 1, "explanation": "AI cannot examine you, access complete context, or reliably rule out serious conditions."},
+      {"prompt": "What should an AI-assisted legal or financial summary clearly distinguish?", "options": ["Facts, assumptions, uncertainties, and items requiring qualified review.", "Only the most favorable conclusion.", "The model's confidence from the actual governing rule."], "answer": 0, "explanation": "High-stakes work needs visible boundaries between source facts, interpretation, uncertainty, and professional judgment."}
+    ]
+  },
+  {
+    "module": 11,
+    "title": "Module 11 Readiness Check",
+    "intro": "Turn successful work into a controlled, reusable process.",
+    "questions": [
+      {"prompt": "You want coworkers to reuse a successful AI workflow. What should the reusable asset include?", "options": ["Only the final prompt.", "Purpose, required inputs, steps, review checks, limits, and an example.", "A promise that it works for every situation."], "answer": 1, "explanation": "Reliable reuse depends on the surrounding process and quality controls, not a prompt alone."},
+      {"prompt": "A template regularly produces one weak section. What is the best improvement?", "options": ["Add a targeted instruction or check for that failure and test it on varied examples.", "Make the entire prompt much longer without testing.", "Tell users to ignore that section."], "answer": 0, "explanation": "Improve the specific failure mode, then test whether the change works across realistic cases."}
+    ]
+  },
+  {
+    "module": 12,
+    "title": "Module 12 Readiness Check",
+    "intro": "Manage ongoing AI-assisted work with clear state and handoffs.",
+    "questions": [
+      {"prompt": "What belongs in a strong project handoff?", "options": ["Only the latest output.", "Goal, current state, decisions, source locations, unresolved issues, and next actions.", "A complete transcript with no summary."], "answer": 1, "explanation": "A handoff should preserve the state needed to continue work without forcing someone to reconstruct the project."},
+      {"prompt": "An AI project has accumulated many conflicting instructions. What is the best corrective action?", "options": ["Add another instruction explaining all conflicts.", "Create a clean current brief that retains valid decisions and removes superseded guidance.", "Continue because more context always improves results."], "answer": 1, "explanation": "Ongoing work benefits from deliberate consolidation so obsolete context does not keep steering the result."}
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+# Website Sitemap
+
+- Home
+- Start Here
+  - How the program works
+  - Initial self-assessment
+  - Learning path
+- Learn
+  - Part I: Understand the Tool
+  - Part II: Communicate Clearly
+  - Part III: Apply the Skill
+  - Part IV: Build Reliable Workflows
+- Practice
+  - Guided practices
+  - Prompt clinics
+  - Challenge labs
+  - Capstone
+- Library
+  - Prompt patterns
+  - Templates
+  - Checklists
+  - Decision guides
+  - Worked examples
+  - Glossary
+- Topics
+  - Research
+  - Writing
+  - Planning
+  - Finance
+  - Medical information
+  - Education
+  - Everyday life
+  - Files
+  - Images
+  - Web research
+- Progress
+- About the methodology
