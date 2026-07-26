@@ -37,6 +37,17 @@ A content object may be released only after all applicable checks pass.
 - Reading-time and activity-time labels describe the actual learner effort.
 - Content works on narrow screens.
 
+## Visual polish checks
+- Typography establishes a clear title, section, body, label, and helper-text hierarchy.
+- Metadata labels sit next to the page title and remain readable without overpowering it.
+- Primary and secondary actions use consistent size, radius, color, and hover/focus behavior.
+- Form labels remain adjacent to their controls; selected answers and validation states are visually unambiguous.
+- Text and control colors meet WCAG AA contrast targets on their intended surfaces.
+- Cards, borders, shadows, and tinted panels communicate hierarchy rather than decorate every section equally.
+- Desktop and narrow-screen layouts have no horizontal overflow, clipped controls, or stranded labels.
+- Touch targets for primary interactive controls are at least 44 pixels high.
+- Reduced-motion, keyboard-focus, and print behavior remain intact.
+
 ## Final simplification pass
 Delete any sentence, example, callout, or section that does not improve understanding, action, safety, or navigation.
 ## Iterative release gate
