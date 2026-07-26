@@ -1,15 +1,13 @@
-# Current Release — Live-Site Corrective Pass 13
+# Current Release — Repository Consistency Pass 14
 
-This release corrects the defects found during the first post-deployment review of the GitHub Pages site. It deliberately avoids new features and broad visual changes.
+This release resolves the repository-maintenance issue found during the post-deployment Pass 13 audit. It does not change the curriculum, learner interactions, or visual design.
 
 ## Changes
-- Replaced raw Markdown course-sequence text with semantic, clickable navigation links on all lessons, applied tasks, and readiness checks.
-- Aligned the written Module 1 and Module 2 task instructions with their four-scenario interactive worksheets.
-- Distinguished reading time from activity completion time.
-- Added realistic effort labels for applied tasks, readiness checks, and the capstone planner.
-- Removed the duplicated site name from the Home-page browser title.
-- Added permanent audit checks for raw Markdown links, rendered sequence navigation, source/activity scenario alignment, realistic effort metadata, and duplicate Home titles.
-- Corrected an audit message so the stated minimum page count matches the enforced minimum.
+- Rebuilt and synchronized the complete `site/generated` directory from the canonical Pass 13 source.
+- Added a deterministic generated-output audit that builds the site in a temporary directory and compares every generated file by path and SHA-256 digest.
+- Updated the release gate so stale, missing, or unexpected generated files fail before packaging or GitHub Pages deployment.
+- Added an optional `--output` argument to the site builder so audits can create a fresh comparison build without altering the repository copy.
+- Updated release documentation to state that generated HTML is intentionally tracked and must remain synchronized with canonical source.
 
 ## Release gate
-Content, UX, consistency, interaction, simplification, data portability, production metadata, rendered-navigation, source/activity alignment, JavaScript, generated-site, GitHub Pages, and ZIP-integrity checks must pass before delivery.
+Content, generated-output consistency, UX, interaction, source/activity alignment, JavaScript, generated-site, GitHub Pages, and ZIP-integrity checks must pass before delivery.

@@ -17,6 +17,7 @@ def run(*args: str) -> None:
 
 def main() -> None:
     run(sys.executable, "governance/content-audit.py")
+    run(sys.executable, "governance/generated-consistency.py")
     run(sys.executable, "site/build_site.py")
     run(sys.executable, "governance/site-audit.py")
     run(
@@ -26,6 +27,7 @@ def main() -> None:
         "governance/content-audit.py",
         "governance/site-audit.py",
         "governance/release_check.py",
+        "governance/generated-consistency.py",
         "site/build_site.py",
     )
     node = shutil.which("node")

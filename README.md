@@ -84,7 +84,7 @@ The generated site is dependency-light, responsive, and built directly from the 
 - A personal, printable course-completion summary that appears only after all guided work is complete
 - GitHub Pages production metadata, favicon, and an accessible project-site-aware 404 page
 - Module-local lesson sequencing plus interactive worksheets on all twelve module completion tasks with scored decision checks, visible answer choices, immediate rationale, selects, text fields, response tallies, completion meters, autosave, and clear/review controls
-- Automated generated-site checks for links, rendered navigation, source/activity alignment, assessment structure, accessibility elements, production metadata, realistic effort labels, and duplicate browser titles
+- Automated generated-site checks for links, rendered navigation, source/activity alignment, assessment structure, accessibility elements, production metadata, realistic effort labels, duplicate browser titles, and repository/build consistency
 
 ## Build and verification
 Run the complete reproducible release gate:
@@ -93,7 +93,7 @@ Run the complete reproducible release gate:
 python governance/release_check.py
 ```
 
-This rebuilds the site, runs iterative content and site audits, compiles Python, checks source and generated JavaScript when Node.js is available, creates the distributable ZIP, and verifies its integrity.
+This first verifies that the tracked `site/generated` tree exactly matches a fresh canonical build, then rebuilds the site, runs iterative content and site audits, compiles Python, checks source and generated JavaScript when Node.js is available, creates the distributable ZIP, and verifies its integrity.
 
 Then open `site/generated/index.html`. Search, milestone tracking, scored readiness checks, interactive task worksheets, bookmarks, notes, learner-data export/import, and resume-learning guidance work without a server or account.
 
@@ -116,6 +116,8 @@ or a site hosted at `/`.
 Every later push to `main` rebuilds the canonical Markdown content, runs the release
 checks, and publishes `site/generated`. A manual deployment can also be started from
 the workflow's **Run workflow** button.
+
+The generated site is intentionally committed to the repository so browser-only downloads and code inspection match the deployed site. Whenever canonical content or the builder changes, run `python site/build_site.py` and commit the complete `site/generated` update. The release gate blocks deployment when the tracked generated tree is stale or incomplete.
 
 ### Repository files added for hosting
 

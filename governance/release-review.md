@@ -49,3 +49,8 @@ Delete any sentence, example, callout, or section that does not improve understa
 
 The audit is part of development, not a document produced after the work.
 
+
+## Repository consistency checks
+- The complete tracked `site/generated` tree matches a fresh build from canonical source.
+- Missing, extra, or byte-different generated files block release and deployment.
+- Generated output is rebuilt and committed as one complete set whenever canonical content or the builder changes.

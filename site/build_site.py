@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import html
 import json
 import re
@@ -645,7 +646,12 @@ def lesson_nav_markup(index: int, sequence: list[tuple[int, Path]]) -> str:
     return sequence_navigation(links)
 
 
-def main() -> None:
+def main(output_dir: Path | None = None) -> None:
+    global OUT
+    if output_dir is not None:
+        OUT = output_dir.resolve()
+    SEARCH_ITEMS.clear()
+    MILESTONE_ITEMS.clear()
     SEARCH_ITEMS.clear()
     MILESTONE_ITEMS.clear()
     if OUT.exists():
@@ -1067,4 +1073,11 @@ Find canonical lessons and reference tools by topic, task, or practical skill.
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Build the static Practical AI Learning site.")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Optional output directory. Defaults to site/generated.",
+    )
+    args = parser.parse_args()
+    main(args.output)
